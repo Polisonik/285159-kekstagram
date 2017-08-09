@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алина Кривенцева](https://up.htmlacademy.ru/javascript/10/user/285159).
-* Наставник: [Сергей Рубец].
+* Наставник: [Сергей Рубец](https://htmlacademy.ru/profile/id41580).
 
 ---
 
