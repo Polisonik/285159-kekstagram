@@ -26,14 +26,16 @@ function addContentPictures() {
     fragment.appendChild(renderPhoto(arrayPictures[i]));
   }
   elementList.appendChild(fragment);
-
-	// Вывод первой картинки из сгенерированного массива в блок .gallery-overlay
-  var gallery = document.querySelector('.gallery-overlay');
-  gallery.querySelector('.gallery-overlay-image').src = arrayPictures[0]['url'];
-  gallery.querySelector('.likes-count').textContent = arrayPictures[0]['likes'];
-  gallery.querySelector('.comments-count').textContent = arrayPictures[0]['comments'];
+  showFirstPhoto(arrayPictures[0]);
 }
+// Вывод первой картинки из сгенерированного массива в блок .gallery-overlay
+function showFirstPhoto(firstPhoto) {
+  var gallery = document.querySelector('.gallery-overlay');
 
+  gallery.querySelector('.gallery-overlay-image').src = firstPhoto['url'];
+  gallery.querySelector('.likes-count').textContent = firstPhoto['likes'];
+  gallery.querySelector('.comments-count').textContent = firstPhoto['comments'].length;
+}
 // Открытие элемента gallery-overlay
 function openGallery() {
   var galleryOverlay = document.querySelector('.gallery-overlay');
@@ -72,17 +74,16 @@ function getComments() {
   var comments = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
   var choice = getRandomNumber(0, 1); // возвращает случайное значение: 0 - 2 комментария к фотографии, 1 - один комментарий к фотографии;
   var indexFirst = getRandomNumber(0, comments.length - 1);
-  var photoComments;
-  var fistComments = comments[indexFirst];
+  var photoComments = [];
+  var firstComments = comments.splice(indexFirst, 1);
+  photoComments.push(firstComments);
 
-  if (choice) {
-    photoComments = fistComments;
-  } else {
-    comments.splice(indexFirst, 1);
+  if (choice === 0) {
     var IndexSecond = getRandomNumber(0, comments.length - 1);
-    photoComments = fistComments + '/n' + comments[IndexSecond];
+    photoComments.push(comments[IndexSecond]);
   }
   return photoComments;
+
 }
 // Заполнение массива из 25 объектов, которые описывают фотографии пользователей
 function generationPhotosDescription() {
