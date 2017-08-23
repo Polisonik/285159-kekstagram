@@ -15,7 +15,7 @@ function renderPhoto(picture) {
 	
 	return newElement;
 }
-//Добавление созданные DOM-элементов в блок .pictures
+//Добавление созданных DOM-элементов в блок .pictures
 function addContentPictures () {
 	var arrayPictures = generationPhotosDescription();
 	var numberPhotos = 25;
@@ -27,10 +27,11 @@ function addContentPictures () {
   }
   elementList.appendChild(fragment);
 	
-	// Вывод первой картинки из сгенерированного массива в блок
-	document.querySelector('.gallery-overlay-image').src = arrayPictures[0]['url'] ;
-  document.querySelector('.likes-count').textContent = arrayPictures[0]['likes'];
-  document.querySelector('.comments-count').textContent = arrayPictures[0]['comments'];
+	// Вывод первой картинки из сгенерированного массива в блок .gallery-overlay
+	var gallery = document.querySelector('.gallery-overlay');
+	gallery.querySelector('.gallery-overlay-image').src = arrayPictures[0]['url'] ;
+  gallery.querySelector('.likes-count').textContent = arrayPictures[0]['likes'];
+  gallery.querySelector('.comments-count').textContent = arrayPictures[0]['comments'];
 }
 
 // Открытие элемента gallery-overlay
@@ -89,7 +90,7 @@ function generationPhotosDescription() {
   var photos = [];
 	var urlPhotos = getUrl();
 	
-	urlPhotos.sort(compareRandom);
+	urlPhotos.sort(compareRandom); // случайная перестановки элементов массива
   for (var i = 0; i < photoNumber; i++) {
 	  photos.push({url: urlPhotos[i], likes: getLikesNumber(), comments: getComments() });
 	}
