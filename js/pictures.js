@@ -29,7 +29,7 @@ function addContentPictures() {
   elementList.appendChild(fragment);
   showPhotoByIndex(arrayPictures[0]);
 }
-// Вывод картинки с из сгенерированного массива в блок .gallery-overlay
+// Вывод картинки из сгенерированного массива фотографий в блок .gallery-overlay
 function showPhotoByIndex(index) {
   var gallery = document.querySelector('.gallery-overlay');
 
