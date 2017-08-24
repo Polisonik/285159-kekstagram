@@ -1,6 +1,5 @@
 'use strict';
 
-
 addContentPictures();
 closeUploadOverlay();
 openGallery();
@@ -13,7 +12,6 @@ function renderPhoto(picture) {
   newElement.querySelector('img').src = picture['url'];
   newElement.querySelector('.picture-likes').textContent = picture['likes'];
   newElement.querySelector('.picture-comments').textContent = picture['comments'];
-
   return newElement;
 }
 // Добавление созданных DOM-элементов в блок .pictures
@@ -84,7 +82,6 @@ function getComments() {
     photoComments.push(comments[IndexSecond]);
   }
   return photoComments;
-
 }
 // Заполнение массива из 25 объектов c описанием фотографий пользователей
 function generationPhotosDescription() {
