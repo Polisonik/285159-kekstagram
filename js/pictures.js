@@ -1,7 +1,8 @@
 'use strict';
 
-closeUploadOverlay();
+
 addContentPictures();
+closeUploadOverlay();
 openGallery();
 
 // Заполнение шаблона для одной фотографии
@@ -26,15 +27,15 @@ function addContentPictures() {
     fragment.appendChild(renderPhoto(arrayPictures[i]));
   }
   elementList.appendChild(fragment);
-  showFirstPhoto(arrayPictures[0]);
+  showPhotoByIndex(arrayPictures[0]);
 }
-// Вывод первой картинки из сгенерированного массива в блок .gallery-overlay
-function showFirstPhoto(firstPhoto) {
+// Вывод картинки с из сгенерированного массива в блок .gallery-overlay
+function showPhotoByIndex(index) {
   var gallery = document.querySelector('.gallery-overlay');
 
-  gallery.querySelector('.gallery-overlay-image').src = firstPhoto['url'];
-  gallery.querySelector('.likes-count').textContent = firstPhoto['likes'];
-  gallery.querySelector('.comments-count').textContent = firstPhoto['comments'].length;
+  gallery.querySelector('.gallery-overlay-image').src = index['url'];
+  gallery.querySelector('.likes-count').textContent = index['likes'];
+  gallery.querySelector('.comments-count').textContent = index['comments'].length;
 }
 // Открытие элемента gallery-overlay
 function openGallery() {
@@ -85,13 +86,13 @@ function getComments() {
   return photoComments;
 
 }
-// Заполнение массива из 25 объектов, которые описывают фотографии пользователей
+// Заполнение массива из 25 объектов c описанием фотографий пользователей
 function generationPhotosDescription() {
   var photoNumber = 25;
   var photos = [];
   var urlPhotos = getUrl();
 
-  urlPhotos.sort(compareRandom); // случайная перестановки элементов массива
+  urlPhotos.sort(compareRandom); // случайная перестановка элементов массива
   for (var i = 0; i < photoNumber; i++) {
     photos.push({url: urlPhotos[i], likes: getLikesNumber(), comments: getComments()});
   }
