@@ -1,9 +1,12 @@
 'use strict';
 
-addContentPictures();
-closeUploadOverlay();
-openGallery();
+init();
 
+function init() {
+  addContentPictures();
+  closeUploadOverlay();
+  openGallery();
+}
 // Заполнение шаблона для одной фотографии
 function renderPhoto(picture) {
   var elementTemplate = document.querySelector('#picture-template').content;
