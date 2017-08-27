@@ -1,11 +1,11 @@
 'use strict';
 
-init();
-
-function init() {
+(function() {
   addContentPictures();
   closeUploadOverlay();
-  openGallery();
+	debugger;
+	showBigPhoto();
+  //openGallery();
 
   // Заполнение шаблона для одной фотографии
   function renderPhoto(picture) {
@@ -28,15 +28,15 @@ function init() {
       fragment.appendChild(renderPhoto(arrayPictures[i]));
     }
     elementList.appendChild(fragment);
-    showPhotoByIndex(arrayPictures[0]);
+    showPhoto(arrayPictures[0]);
   }
   // Вывод картинки из сгенерированного массива фотографий в блок .gallery-overlay
-  function showPhotoByIndex(index) {
+  function showPhoto(item) {
     var gallery = document.querySelector('.gallery-overlay');
 
-    gallery.querySelector('.gallery-overlay-image').src = index['url'];
-    gallery.querySelector('.likes-count').textContent = index['likes'];
-    gallery.querySelector('.comments-count').textContent = index['comments'].length;
+    gallery.querySelector('.gallery-overlay-image').src = item['url'];
+    gallery.querySelector('.likes-count').textContent = item['likes'];
+    gallery.querySelector('.comments-count').textContent = item['comments'].length;
   }
   // Открытие элемента gallery-overlay
   function openGallery() {
@@ -44,6 +44,7 @@ function init() {
 
     galleryOverlay.classList.remove('hidden');
   }
+	
   // Скрытие формы кадрирования изображения
   function closeUploadOverlay() {
     var uploadOverlay = document.querySelector('.upload-overlay');
@@ -103,4 +104,16 @@ function init() {
   function compareRandom(a, b) {
     return Math.random() - 0.5;
   }
-}
+	
+  // Добавление события клика на картинку.
+	function showBigPhoto () {
+		var pictures = document.querySelector('.pictures');
+		pictures.addEventListener('click', onClikPhoto);
+	}
+	function onClikPhoto(event) {
+		var target = event.target;
+		var galleryOverlay = document.querySelector('.gallery-overlay');
+
+    galleryOverlay.classList.remove('hidden');
+	} 
+})();
