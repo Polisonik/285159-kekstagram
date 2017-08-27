@@ -1,11 +1,10 @@
 'use strict';
 
-(function() {
+(function () {
   addContentPictures();
   closeUploadOverlay();
-	debugger;
-	showBigPhoto();
-  //openGallery();
+  showBigPhoto();
+  // openGallery();
 
   // Заполнение шаблона для одной фотографии
   function renderPhoto(picture) {
@@ -44,7 +43,6 @@
 
     galleryOverlay.classList.remove('hidden');
   }
-	
   // Скрытие формы кадрирования изображения
   function closeUploadOverlay() {
     var uploadOverlay = document.querySelector('.upload-overlay');
@@ -104,16 +102,12 @@
   function compareRandom(a, b) {
     return Math.random() - 0.5;
   }
-	
   // Добавление события клика на картинку.
-	function showBigPhoto () {
-		var pictures = document.querySelector('.pictures');
-		pictures.addEventListener('click', onClikPhoto);
-	}
-	function onClikPhoto(event) {
-		var target = event.target;
-		var galleryOverlay = document.querySelector('.gallery-overlay');
-
-    galleryOverlay.classList.remove('hidden');
-	} 
+  function showBigPhoto() {
+    var pictures = document.querySelector('.pictures');
+    pictures.addEventListener('click', onClikPhoto);
+  }
+  function onClikPhoto(event) {
+    openGallery();
+  }
 })();
