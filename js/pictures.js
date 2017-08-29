@@ -3,17 +3,27 @@
 (function () {
   addContentPictures();
   closeUploadOverlay();
-  showBigPhoto();
-  // openGallery();
+  controlGallery();
 
+  // добваление в блок picture-comments новых DOM элементов span с комментариями
+  function addCommentsToPhoto(comments) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < comments.length; i++) {
+      var newElement = document.createElement('span');
+      newElement.textContent = comments[i];
+      fragment.appendChild(newElement);
+    }
+    return fragment;
+  }
   // Заполнение шаблона для одной фотографии
   function renderPhoto(picture) {
     var elementTemplate = document.querySelector('#picture-template').content;
     var newElement = elementTemplate.cloneNode(true);
 
-    newElement.querySelector('img').src = picture['url'];
-    newElement.querySelector('.picture-likes').textContent = picture['likes'];
-    newElement.querySelector('.picture-comments').textContent = picture['comments'];
+    newElement.querySelector('img').src = picture.url;
+    newElement.querySelector('.picture-likes').textContent = picture.likes;
+    newElement.querySelector('.picture-comments').appendChild(addCommentsToPhoto(picture.comments));
     return newElement;
   }
   // Добавление созданных DOM-элементов в блок .pictures
@@ -27,21 +37,6 @@
       fragment.appendChild(renderPhoto(arrayPictures[i]));
     }
     elementList.appendChild(fragment);
-    showPhoto(arrayPictures[0]);
-  }
-  // Вывод картинки из сгенерированного массива фотографий в блок .gallery-overlay
-  function showPhoto(item) {
-    var gallery = document.querySelector('.gallery-overlay');
-
-    gallery.querySelector('.gallery-overlay-image').src = item['url'];
-    gallery.querySelector('.likes-count').textContent = item['likes'];
-    gallery.querySelector('.comments-count').textContent = item['comments'].length;
-  }
-  // Открытие элемента gallery-overlay
-  function openGallery() {
-    var galleryOverlay = document.querySelector('.gallery-overlay');
-
-    galleryOverlay.classList.remove('hidden');
   }
   // Скрытие формы кадрирования изображения
   function closeUploadOverlay() {
@@ -49,7 +44,6 @@
 
     uploadOverlay.classList.add('hidden');
   }
-
   // Генерация случайного целого числа из диапазоана [min, max];
   function getRandomNumber(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -68,19 +62,21 @@
   function getLikesNumber() {
     var minNumber = 15;
     var maxNumber = 200;
-    var l = getRandomNumber(minNumber, maxNumber);
-    return l;
+
+    return getRandomNumber(minNumber, maxNumber);
   }
   // Генерация комментариев;
   function getComments() {
     var comments = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-    var choice = getRandomNumber(0, 1); // возвращает случайное значение: 0 - 2 комментария к фотографии, 1 - один комментарий к фотографии;
+    var commentsCount = getRandomNumber(1, 2); // возвращает случайное значение: 1 - 1 комментарии к фотографии, 2 - два комментария к фотографии;
+    var maxNumberComments = 2;
     var indexFirst = getRandomNumber(0, comments.length - 1);
     var photoComments = [];
-    var firstComments = comments.splice(indexFirst, 1);
+    var firstComments = comments[indexFirst];
     photoComments.push(firstComments);
+    comments.splice(indexFirst, 1);
 
-    if (choice === 0) {
+    if (commentsCount === maxNumberComments) {
       var IndexSecond = getRandomNumber(0, comments.length - 1);
       photoComments.push(comments[IndexSecond]);
     }
@@ -102,12 +98,101 @@
   function compareRandom(a, b) {
     return Math.random() - 0.5;
   }
-  // Добавление события клика на картинку.
-  function showBigPhoto() {
-    var pictures = document.querySelector('.pictures');
-    pictures.addEventListener('click', onClikPhoto);
+  // Функция
+  function controlGallery() {
+    var openGallery = document.querySelector('.pictures');
+    openGallery.addEventListener('click', onClikPhoto);
+    openGallery.addEventListener('keydown', onKeydownEnterPhoto);
   }
+	// Открытие просмотра фотографии и добавлени обработчиков событий
+  function openPopup() {
+    var gallery = document.querySelector('.gallery-overlay');
+    var closePhoto = gallery.querySelector('.gallery-overlay-close');
+
+    gallery.classList.remove('hidden');
+    document.addEventListener('keydown', onKeydownEsc);
+    closePhoto.addEventListener('click', onClickCross);
+    closePhoto.addEventListener('keydown', onKeydownEnterCross);
+  }
+	// Закрытие режима просмотра фотографии и удаление обработчиков событий
+  function closePopup() {
+    var gallery = document.querySelector('.gallery-overlay');
+    var closePhoto = gallery.querySelector('.gallery-overlay-close');
+
+    gallery.classList.add('hidden');
+    document.removeEventListener('keydown', onKeydownEsc);
+    closePhoto.removeEventListener('click', onClickCross);
+    closePhoto.removeEventListener('keydown', onKeydownEnterCross);
+  }
+  // Получение данных о фоторгафии при событии на теге img
+  function getDataOfPhoto(event) {
+    var target = event.target;
+    var src = target.src;
+    var linkCount = target.nextElementSibling.lastElementChild.textContent;
+    var commentsCount = target.nextElementSibling.firstElementChild.children.length;
+
+    prepareDescriptionPhoto(src, linkCount, commentsCount);
+  }
+  // Получение данных о фоторгафии при событии на теге a
+  function getDataOfPhotoAlternative(event) {
+    var target = event.target;
+    var src = target.firstElementChild.src;
+    var linkCount = target.lastElementChild.lastElementChild.textContent;
+    var commentsCount = target.lastElementChild.firstElementChild.children.length;
+
+    prepareDescriptionPhoto(src, linkCount, commentsCount);
+  }
+  // Заполнение описания фотографии для режима просмотра
+  function prepareDescriptionPhoto(url, linkCount, commentsCount) {
+    var gallery = document.querySelector('.gallery-overlay');
+
+    gallery.querySelector('.gallery-overlay-image').src = url;
+    gallery.querySelector('.likes-count').textContent = linkCount;
+    gallery.querySelector('.comments-count').textContent = commentsCount;
+  }
+	// Обработка события нажатия на Esc при отрытом режиме просмотра фотографии
+  function onKeydownEsc(event) {
+    var ESC = 27;
+    if (event.keyCode === ESC) {
+      closePopup();
+    }
+  }
+  // Обработка события клика мыши на миниатюру фотографии
   function onClikPhoto(event) {
-    openGallery();
+    var target = event.target;
+    if (target.tagName !== 'IMG') {
+      return;
+    }
+    event.preventDefault();
+    getDataOfPhoto(event);
+    openPopup();
+  }
+  // Обработка события клика на крестик для закрытия режима просмотра фотографии
+  function onClickCross(event) {
+    event.preventDefault();
+    closePopup();
+  }
+  // Обработка события нажатия Enter на миниатюру фотографии
+  function onKeydownEnterPhoto(event) {
+    event.preventDefault();
+		var ENTER = 13;
+    var target = event.target;
+    if (event.keyCode === ENTER) {
+      if (target.tagName === 'IMG') {
+        getDataOfPhoto(event);
+        openPopup();
+      } else if (target.tagName === 'A') {
+        getDataOfPhotoAlternative(event);
+        openPopup();
+      }
+    }
+  }
+  // Обработка события нажатия клавиши Enter для закрытия режима просмотра фотографии
+  function onKeydownEnterCross(event) {
+    event.preventDefault();
+    var ENTER = 13;
+    if (event.keyCode === ENTER) {
+      closePopup();
+    }
   }
 })();
