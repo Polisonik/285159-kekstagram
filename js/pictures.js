@@ -175,7 +175,7 @@
   // Обработка события нажатия Enter на миниатюру фотографии
   function onKeydownEnterPhoto(event) {
     event.preventDefault();
-		var ENTER = 13;
+    var ENTER = 13;
     var target = event.target;
     if (event.keyCode === ENTER) {
       if (target.tagName === 'IMG') {
