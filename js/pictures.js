@@ -4,7 +4,7 @@
   addContentPictures();
   closeUploadOverlay();
   controlGallery();
-
+	controlUploadOvelrlay();
   // добваление в блок picture-comments новых DOM элементов span с комментариями
   function addCommentsToPhoto(comments) {
     var fragment = document.createDocumentFragment();
@@ -39,11 +39,7 @@
     elementList.appendChild(fragment);
   }
   // Скрытие формы кадрирования изображения
-  function closeUploadOverlay() {
-    var uploadOverlay = document.querySelector('.upload-overlay');
-
-    uploadOverlay.classList.add('hidden');
-  }
+  
   // Генерация случайного целого числа из диапазоана [min, max];
   function getRandomNumber(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -195,4 +191,115 @@
       closePopup();
     }
   }
+	// Работа с окном кадрирования 
+	function controlUploadOvelrlay() {
+		var form = document.querySelector('#upload-select-image');
+		var uploadFile = form.querySelector('#upload-file');
+		
+		uploadFile.addEventListener('change', onInputFile)
+	}
+	function onInputFile() {
+		openUploadOverlay();
+	}
+	function openUploadOverlay() {
+		var uploadOverlay = document.querySelector('.upload-overlay');
+		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
+		
+		controlResize();		
+		uploadOverlay.classList.remove('hidden');
+		document.addEventListener('keydown', onKeydownEsc);
+		uploadCansel.addEventListener('click', onClickCansel);
+		uploadCansel.addEventListener('keydown', onKeydownEnterCrossCansel);
+		
+	}
+	function closeUploadOverlay() {
+    var uploadOverlay = document.querySelector('.upload-overlay');
+		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
+		var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
+		var buttonIncrease =uploadOverlay.querySelector('.upload-resize-controls-button-inc');
+		
+    uploadOverlay.classList.add('hidden');
+		
+		document.removeEventListener('keydown', onKeydownEsc);
+		uploadCansel.removeEventListener('click', onClickCansel);
+		uploadCansel.removeEventListener('keydown', onKeydownEnterCrossCansel);
+		buttonDecrease.removeEventListener('click', onClickDesrease);
+		buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
+		buttonIncrease.removeEventListener('click', onClickIncrease);
+		buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
+	
+  }
+	function onKeydownEsc(event) {
+		var ESC = 27;
+		var descriptionPhoot = document.querySelector('.upload-form-description')
+		if(event.keyCode === ESC && descriptionPhoot != document.activeElement) {
+			closeUploadOverlay();
+		}
+	}
+	function onClickCansel() {
+		closeUploadOverlay();
+	}
+	function onKeydownEnterCrossCansel(event) {
+		var ENTER = 13;
+		if (event.keyCode === ENTER) {
+			closeUploadOverlay();
+		}
+	}
+	// Изменение масштаба фотографии 
+	function controlResize() {
+		var uploadResize = document.querySelector('.upload-resize-controls');
+		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
+		var buttonIncrease =uploadResize.querySelector('.upload-resize-controls-button-inc');
+		
+		buttonDecrease.addEventListener('click', onClickDesrease);
+		buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
+		buttonIncrease.addEventListener('click', onClickIncrease);
+		buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
+	}		
+	function getValueDesrease() {
+		var uploadResize = document.querySelector('.upload-resize-controls');
+		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
+		var inputData = uploadResize.querySelector('.upload-resize-controls-value');
+		var initialValue = parseInt(inputData.value);
+		var min = 25;
+		var step = 25;
+		var value = initialValue - step;
+		
+		if (value < min) {
+			value = min;
+		}
+		inputData.value = value + '%';
+	}
+	function getValueIncrease() {
+		var uploadResize = document.querySelector('.upload-resize-controls');
+		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
+		var inputData = uploadResize.querySelector('.upload-resize-controls-value');
+		var initialValue = parseInt(inputData.value);
+		var max = 100;
+		var step = 25;
+		var value = initialValue + step;
+		
+		if (value > max) {
+			value = max;
+		}		
+		inputData.value = value + '%';
+	}
+	function onClickDesrease() {
+		getValueDesrease();
+	}
+	function onClickIncrease() {
+		getValueIncrease();
+	}
+	function onKeydownEnterDesrease(event) {
+		var ENTER = 13;
+		if (event.keyCode === ENTER) {
+			getValueDesrease();
+		}
+	}
+	function onKeydownEnterDesrease(event) {
+		var ENTER = 13;
+		if (event.keyCode === ENTER) {
+			getValueIncrease();
+		}
+	}
 })();
