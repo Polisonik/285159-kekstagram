@@ -209,7 +209,7 @@
 		uploadOverlay.classList.remove('hidden');
 		document.addEventListener('keydown', onKeydownEsc);
 		uploadCansel.addEventListener('click', onClickCansel);
-		uploadCansel.addEventListener('keydown', onKeydownEnterCrossCansel);
+		uploadCansel.addEventListener('keydown', onKeydownEnterCansel);
 		
 	}
 	function closeUploadOverlay() {
@@ -222,7 +222,7 @@
 		
 		document.removeEventListener('keydown', onKeydownEsc);
 		uploadCansel.removeEventListener('click', onClickCansel);
-		uploadCansel.removeEventListener('keydown', onKeydownEnterCrossCansel);
+		uploadCansel.removeEventListener('keydown', onKeydownEnterCansel);
 		buttonDecrease.removeEventListener('click', onClickDesrease);
 		buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
 		buttonIncrease.removeEventListener('click', onClickIncrease);
@@ -239,7 +239,7 @@
 	function onClickCansel() {
 		closeUploadOverlay();
 	}
-	function onKeydownEnterCrossCansel(event) {
+	function onKeydownEnterCansel(event) {
 		var ENTER = 13;
 		if (event.keyCode === ENTER) {
 			closeUploadOverlay();
@@ -255,7 +255,8 @@
 		buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
 		buttonIncrease.addEventListener('click', onClickIncrease);
 		buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
-	}		
+	}	
+	// Функция уменьшнния значения масштаба 
 	function getValueDesrease() {
 		var uploadResize = document.querySelector('.upload-resize-controls');
 		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
@@ -269,7 +270,9 @@
 			value = min;
 		}
 		inputData.value = value + '%';
+		return value;
 	}
+	// Функция увеличения значения масштаба 
 	function getValueIncrease() {
 		var uploadResize = document.querySelector('.upload-resize-controls');
 		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
@@ -283,23 +286,36 @@
 			value = max;
 		}		
 		inputData.value = value + '%';
+		return value;
 	}
 	function onClickDesrease() {
 		getValueDesrease();
+		resizeScale();
 	}
 	function onClickIncrease() {
 		getValueIncrease();
+		resizeScale();
 	}
 	function onKeydownEnterDesrease(event) {
 		var ENTER = 13;
 		if (event.keyCode === ENTER) {
 			getValueDesrease();
+			resizeScale();
 		}
 	}
-	function onKeydownEnterDesrease(event) {
+	function onKeydownEnterIncrease(event) {
 		var ENTER = 13;
 		if (event.keyCode === ENTER) {
 			getValueIncrease();
+			resizeScale();
 		}
 	}
+	// Функция изменения мастштаба фотографии
+	function resizeScale() {
+		var uploadOverlay = document.querySelector('.upload-overlay');
+		var photo = uploadOverlay.querySelector('.effect-image-preview');
+		var scaleInput = uploadOverlay.querySelector('.upload-resize-controls-value').value;
+		var persent = 100;
+		photo.style.transform = 'scale(' + parseInt(scaleInput) / 100 +')';
+	}	
 })();
