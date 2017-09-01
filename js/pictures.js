@@ -205,7 +205,8 @@
 		var uploadOverlay = document.querySelector('.upload-overlay');
 		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
 		
-		controlResize();		
+		controlResize();
+		applyEffect();
 		uploadOverlay.classList.remove('hidden');
 		document.addEventListener('keydown', onKeydownEsc);
 		uploadCansel.addEventListener('click', onClickCansel);
@@ -217,17 +218,20 @@
 		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
 		var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
 		var buttonIncrease =uploadOverlay.querySelector('.upload-resize-controls-button-inc');
+		var blockEffect = document.querySelector('.upload-effect-controls');
 		
-    uploadOverlay.classList.add('hidden');
+		uploadOverlay.classList.add('hidden');
 		
 		document.removeEventListener('keydown', onKeydownEsc);
 		uploadCansel.removeEventListener('click', onClickCansel);
 		uploadCansel.removeEventListener('keydown', onKeydownEnterCansel);
+		
 		buttonDecrease.removeEventListener('click', onClickDesrease);
 		buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
 		buttonIncrease.removeEventListener('click', onClickIncrease);
 		buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
-	
+		
+		blockEffect.addEventListener('click', onClickEffect);	
   }
 	function onKeydownEsc(event) {
 		var ESC = 27;
@@ -255,7 +259,7 @@
 		buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
 		buttonIncrease.addEventListener('click', onClickIncrease);
 		buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
-	}	
+	}
 	// Функция уменьшнния значения масштаба 
 	function getValueDesrease() {
 		var uploadResize = document.querySelector('.upload-resize-controls');
@@ -271,11 +275,11 @@
 		}
 		inputData.value = value + '%';
 		return value;
-	}
+	}	
 	// Функция увеличения значения масштаба 
 	function getValueIncrease() {
 		var uploadResize = document.querySelector('.upload-resize-controls');
-		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
+		var buttonIncrease = uploadResize.querySelector('.upload-resize-controls-button-inc');
 		var inputData = uploadResize.querySelector('.upload-resize-controls-value');
 		var initialValue = parseInt(inputData.value);
 		var max = 100;
@@ -287,8 +291,8 @@
 		}		
 		inputData.value = value + '%';
 		return value;
-	}
-	function onClickDesrease() {
+	} 
+	function onClickDesrease(event) {
 		getValueDesrease();
 		resizeScale();
 	}
@@ -317,5 +321,41 @@
 		var scaleInput = uploadOverlay.querySelector('.upload-resize-controls-value').value;
 		var persent = 100;
 		photo.style.transform = 'scale(' + parseInt(scaleInput) / 100 +')';
-	}	
+	}
+	// Добавление эффектов 
+	function applyEffect() {
+		var blockEffect = document.querySelector('.upload-effect-controls');
+		
+		blockEffect.addEventListener('click', onClickEffect);
+	}
+	// Обработчие события клика на миниатюру эффекта (Можно ли как-то оптимизировать, использовать метод toggle?)
+	// Как снимать обработчик события после переключения на другой эффект? 
+	// Можно ли снимать обработчки по событию mouseup?
+	function onClickEffect(event) {
+		var uploadOverlay = document.querySelector('.upload-overlay');
+		var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
+		var photo = uploadOverlay.querySelector('.effect-image-preview');
+		var effects = getEffect();
+		var target = event.target;
+		var name = target.value;
+		
+		if (target.tagName !== 'INPUT') {
+			return;
+		}		
+		photo.classList.add('effect-' + name);
+		var index = effects.indexOf(name);
+		effects.splice(index, 1);
+		for (var i = 0; i < effects.length; i++) {
+			photo.classList.remove('effect-' + effects[i])
+		}		
+	}
+	function getEffect() {
+		var uploadOverlay = document.querySelector('.upload-overlay');
+		var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
+		var array = [];
+		for (var i = 0; i <blockEffect.elements.length; i++) {
+			array.push(blockEffect.elements[i].value);
+		}		
+		return array;
+	}
 })();
