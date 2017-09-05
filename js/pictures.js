@@ -2,9 +2,8 @@
 
 (function () {
   addContentPictures();
-  closeUploadOverlay();
   controlGallery();
-	controlUploadOvelrlay();
+  controlUploadOvelrlay();
   // добваление в блок picture-comments новых DOM элементов span с комментариями
   function addCommentsToPhoto(comments) {
     var fragment = document.createDocumentFragment();
@@ -38,8 +37,6 @@
     }
     elementList.appendChild(fragment);
   }
-  // Скрытие формы кадрирования изображения
-  
   // Генерация случайного целого числа из диапазоана [min, max];
   function getRandomNumber(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -191,171 +188,133 @@
       closePopup();
     }
   }
-	// Работа с окном кадрирования 
-	function controlUploadOvelrlay() {
-		var form = document.querySelector('#upload-select-image');
-		var uploadFile = form.querySelector('#upload-file');
-		
-		uploadFile.addEventListener('change', onInputFile)
-	}
-	function onInputFile() {
-		openUploadOverlay();
-	}
-	function openUploadOverlay() {
-		var uploadOverlay = document.querySelector('.upload-overlay');
-		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
-		
-		controlResize();
-		applyEffect();
-		uploadOverlay.classList.remove('hidden');
-		document.addEventListener('keydown', onKeydownEsc);
-		uploadCansel.addEventListener('click', onClickCansel);
-		uploadCansel.addEventListener('keydown', onKeydownEnterCansel);
-		
-	}
-	function closeUploadOverlay() {
-    var uploadOverlay = document.querySelector('.upload-overlay');
-		var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
-		var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
-		var buttonIncrease =uploadOverlay.querySelector('.upload-resize-controls-button-inc');
-		var blockEffect = document.querySelector('.upload-effect-controls');
-		
-		uploadOverlay.classList.add('hidden');
-		
-		document.removeEventListener('keydown', onKeydownEsc);
-		uploadCansel.removeEventListener('click', onClickCansel);
-		uploadCansel.removeEventListener('keydown', onKeydownEnterCansel);
-		
-		buttonDecrease.removeEventListener('click', onClickDesrease);
-		buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
-		buttonIncrease.removeEventListener('click', onClickIncrease);
-		buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
-		
-		blockEffect.addEventListener('click', onClickEffect);	
+	// Работа с окном кадрирования
+  function controlUploadOvelrlay() {
+    var form = document.querySelector('#upload-select-image');
+    var uploadFile = form.querySelector('#upload-file');
+    var uploadOverlay = form.querySelector('.upload-overlay');
+    var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
+    var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
+    var buttonIncrease = uploadOverlay.querySelector('.upload-resize-controls-button-inc');
+    var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
+    var uploadResize = uploadOverlay.querySelector('.upload-resize-controls');
+    var inputData = uploadResize.querySelector('.upload-resize-controls-value');
+    var initialValue = parseInt(inputData.value, 10);
+    var photo = uploadOverlay.querySelector('.effect-image-preview');
+
+    uploadFile.addEventListener('change', onInputFile);
+
+    function onInputFile() {
+      openUploadOverlay();
+    }
+    function openUploadOverlay() {
+      controlResize();
+      applyEffect();
+      uploadOverlay.classList.remove('hidden');
+      document.addEventListener('keydown', onKeydownEsc);
+      uploadCansel.addEventListener('click', onClickCansel);
+      uploadCansel.addEventListener('keydown', onKeydownEnterCansel);
+    }
+    function closeUploadOverlay() {
+      uploadOverlay.classList.add('hidden');
+      document.removeEventListener('keydown', onKeydownEscClose);
+      uploadCansel.removeEventListener('click', onClickCansel);
+      uploadCansel.removeEventListener('keydown', onKeydownEnterCansel);
+      buttonDecrease.removeEventListener('click', onClickDesrease);
+      buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
+      buttonIncrease.removeEventListener('click', onClickIncrease);
+      buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
+      blockEffect.addEventListener('click', onClickEffect);
+    }
+    function onKeydownEscClose(event) {
+      var ESC = 27;
+      var descriptionPhoto = document.querySelector('.upload-form-description');
+      if (event.keyCode === ESC && descriptionPhoto !== document.activeElement) {
+        closeUploadOverlay();
+      }
+    }
+    function onClickCansel() {
+      closeUploadOverlay();
+    }
+    function onKeydownEnterCansel(event) {
+      var ENTER = 13;
+      if (event.keyCode === ENTER) {
+        closeUploadOverlay();
+      }
+    }
+    // Изменение масштаба фотографии
+    function controlResize() {
+      buttonDecrease.addEventListener('click', onClickDesrease);
+      buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
+      buttonIncrease.addEventListener('click', onClickIncrease);
+      buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
+    }
+    // Функция уменьшнния значения масштаба
+    function getValueDesrease() {
+      var min = 25;
+      var step = 25;
+      var value = initialValue - step;
+
+      if (value < min) {
+        value = min;
+      }
+      inputData.value = value + '%';
+      return value;
+    }
+    // Функция увеличения значения масштаба
+    function getValueIncrease() {
+      var max = 100;
+      var step = 25;
+      var value = initialValue + step;
+
+      if (value > max) {
+        value = max;
+      }
+      inputData.value = value + '%';
+      return value;
+    }
+    function onClickDesrease(event) {
+      getValueDesrease();
+      resizeScale();
+    }
+    function onClickIncrease() {
+      getValueIncrease();
+      resizeScale();
+    }
+    function onKeydownEnterDesrease(event) {
+      var ENTER = 13;
+      if (event.keyCode === ENTER) {
+        getValueDesrease();
+        resizeScale();
+      }
+    }
+    function onKeydownEnterIncrease(event) {
+      var ENTER = 13;
+      if (event.keyCode === ENTER) {
+        getValueIncrease();
+        resizeScale();
+      }
+    }
+    // Функция изменения мастштаба фотографии
+    function resizeScale() {
+      var scaleInput = uploadOverlay.querySelector('.upload-resize-controls-value').value;
+      var persent = 100;
+      photo.style.transform = 'scale(' + parseInt(scaleInput, 10) / persent + ')';
+    }
+    // Добавление эффектов
+    function applyEffect() {
+      blockEffect.addEventListener('click', onClickEffect);
+    }
+
+    function onClickEffect(event) {
+      var target = event.target;
+      var filterName = target.value;
+      var defaultClass = 'effect-image-preview';
+
+      if (target.tagName !== 'INPUT') {
+        return;
+      }
+      photo.className = defaultClass + ' ' + 'effect-' + filterName;
+    }
   }
-	function onKeydownEsc(event) {
-		var ESC = 27;
-		var descriptionPhoot = document.querySelector('.upload-form-description')
-		if(event.keyCode === ESC && descriptionPhoot != document.activeElement) {
-			closeUploadOverlay();
-		}
-	}
-	function onClickCansel() {
-		closeUploadOverlay();
-	}
-	function onKeydownEnterCansel(event) {
-		var ENTER = 13;
-		if (event.keyCode === ENTER) {
-			closeUploadOverlay();
-		}
-	}
-	// Изменение масштаба фотографии 
-	function controlResize() {
-		var uploadResize = document.querySelector('.upload-resize-controls');
-		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
-		var buttonIncrease =uploadResize.querySelector('.upload-resize-controls-button-inc');
-		
-		buttonDecrease.addEventListener('click', onClickDesrease);
-		buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
-		buttonIncrease.addEventListener('click', onClickIncrease);
-		buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
-	}
-	// Функция уменьшнния значения масштаба 
-	function getValueDesrease() {
-		var uploadResize = document.querySelector('.upload-resize-controls');
-		var buttonDecrease = uploadResize.querySelector('.upload-resize-controls-button-dec');
-		var inputData = uploadResize.querySelector('.upload-resize-controls-value');
-		var initialValue = parseInt(inputData.value);
-		var min = 25;
-		var step = 25;
-		var value = initialValue - step;
-		
-		if (value < min) {
-			value = min;
-		}
-		inputData.value = value + '%';
-		return value;
-	}	
-	// Функция увеличения значения масштаба 
-	function getValueIncrease() {
-		var uploadResize = document.querySelector('.upload-resize-controls');
-		var buttonIncrease = uploadResize.querySelector('.upload-resize-controls-button-inc');
-		var inputData = uploadResize.querySelector('.upload-resize-controls-value');
-		var initialValue = parseInt(inputData.value);
-		var max = 100;
-		var step = 25;
-		var value = initialValue + step;
-		
-		if (value > max) {
-			value = max;
-		}		
-		inputData.value = value + '%';
-		return value;
-	} 
-	function onClickDesrease(event) {
-		getValueDesrease();
-		resizeScale();
-	}
-	function onClickIncrease() {
-		getValueIncrease();
-		resizeScale();
-	}
-	function onKeydownEnterDesrease(event) {
-		var ENTER = 13;
-		if (event.keyCode === ENTER) {
-			getValueDesrease();
-			resizeScale();
-		}
-	}
-	function onKeydownEnterIncrease(event) {
-		var ENTER = 13;
-		if (event.keyCode === ENTER) {
-			getValueIncrease();
-			resizeScale();
-		}
-	}
-	// Функция изменения мастштаба фотографии
-	function resizeScale() {
-		var uploadOverlay = document.querySelector('.upload-overlay');
-		var photo = uploadOverlay.querySelector('.effect-image-preview');
-		var scaleInput = uploadOverlay.querySelector('.upload-resize-controls-value').value;
-		var persent = 100;
-		photo.style.transform = 'scale(' + parseInt(scaleInput) / 100 +')';
-	}
-	// Добавление эффектов 
-	function applyEffect() {
-		var blockEffect = document.querySelector('.upload-effect-controls');
-		
-		blockEffect.addEventListener('click', onClickEffect);
-	}
-	// Обработчие события клика на миниатюру эффекта (Можно ли как-то оптимизировать, использовать метод toggle?)
-	// Как снимать обработчик события после переключения на другой эффект? 
-	// Можно ли снимать обработчки по событию mouseup?
-	function onClickEffect(event) {
-		var uploadOverlay = document.querySelector('.upload-overlay');
-		var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
-		var photo = uploadOverlay.querySelector('.effect-image-preview');
-		var effects = getEffect();
-		var target = event.target;
-		var name = target.value;
-		
-		if (target.tagName !== 'INPUT') {
-			return;
-		}		
-		photo.classList.add('effect-' + name);
-		var index = effects.indexOf(name);
-		effects.splice(index, 1);
-		for (var i = 0; i < effects.length; i++) {
-			photo.classList.remove('effect-' + effects[i])
-		}		
-	}
-	function getEffect() {
-		var uploadOverlay = document.querySelector('.upload-overlay');
-		var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
-		var array = [];
-		for (var i = 0; i <blockEffect.elements.length; i++) {
-			array.push(blockEffect.elements[i].value);
-		}		
-		return array;
-	}
 })();
