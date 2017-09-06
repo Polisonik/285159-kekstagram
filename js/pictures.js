@@ -223,7 +223,8 @@
       buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
       buttonIncrease.removeEventListener('click', onClickIncrease);
       buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
-      blockEffect.addEventListener('click', onClickEffect);
+      blockEffect.removeEventListener('click', onClickEffect);
+      form.removeEventListener('submit', onValidate);
     }
     function onKeydownEscClose(event) {
       var ESC = 27;
@@ -322,128 +323,126 @@
 		// Валидация формы
     function validateForm() {
       form.addEventListener('submit', onValidate);
+    }
+    function onValidate(event) {
+      var input = form.querySelector('.upload-form-hashtags');
+      var textarea = form.querySelector('.upload-form-description');
+      var hashtags = input.value.split(' ');
+      var description = textarea.value;
+      var messagesInput = [];
+      var messagesDescription = [];
 
-      function onValidate(event) {
-        var input = form.querySelector('.upload-form-hashtags');
-        var textarea = form.querySelector('.upload-form-description');
-        var hashtags = input.value.split(' ');
-        var description = textarea.value;
-        var messagesInput = [];
-        var messagesDescription = [];
-
-        removeErrors();
-        if (isFirstSymbolHashtag(hashtags)) {
-          messagesInput.push('хэш-тег начинается с символа `#` и состоит из одного слова');
-        }
-        if (isCountHashtegs(hashtags)) {
-          messagesInput.push('нельзя указать больше пяти хэш-тегов');
-        }
-        if (isMaxLength(hashtags)) {
-          messagesInput.push('максимальная длина одного хэш-тега 20 символов');
-        }
-        if (isEqualHashtag(hashtags)) {
-          messagesInput.push('один и тот же хэш-тег не может быть использован дважды');
-        }
-        if (isDescriptionEmpty(description)) {
-          messagesDescription.push('поле "комментарий" обязателен для заполнения');
-        }
-        if (isMaxLengthDescription(description)) {
-          messagesDescription.push('Максимальная длина комментария — 100 символов');
-        }
-        if (isMinLengthDescription(description)) {
-          messagesDescription.push('Минимальная длина комментария — 30 символов');
-        }
-        if (messagesInput.length) {
-          event.preventDefault();
-          showErrors(messagesInput, input);
-        }
-        if (messagesDescription.length) {
-          event.preventDefault();
-          showErrors(messagesDescription, textarea);
-        }
-        // restoreDefault();
+      removeErrors();
+      if (isFirstSymbolHashtag(hashtags)) {
+        messagesInput.push('хэш-тег начинается с символа `#` и состоит из одного слова');
       }
-      // проверка,если хештеги отсутствуют
-      function isEmptyHashtag(hashtags) {
-        return (hashtags.join() === '');
+      if (isCountHashtegs(hashtags)) {
+        messagesInput.push('нельзя указать больше пяти хэш-тегов');
       }
-      // Проверка первого симовла хештега на равенстов '#'
-      function isFirstSymbolHashtag(hashtags) {
-        for (var i = 0; i < hashtags.length; i++) {
-          if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < 2)) {
+      if (isMaxLength(hashtags)) {
+        messagesInput.push('максимальная длина одного хэш-тега 20 символов');
+      }
+      if (isEqualHashtag(hashtags)) {
+        messagesInput.push('один и тот же хэш-тег не может быть использован дважды');
+      }
+      if (isDescriptionEmpty(description)) {
+        messagesDescription.push('поле "комментарий" обязателен для заполнения');
+      }
+      if (isMaxLengthDescription(description)) {
+        messagesDescription.push('Максимальная длина комментария — 100 символов');
+      }
+      if (isMinLengthDescription(description)) {
+        messagesDescription.push('Минимальная длина комментария — 30 символов');
+      }
+      if (messagesInput.length) {
+        event.preventDefault();
+        showErrors(messagesInput, input);
+      }
+      if (messagesDescription.length) {
+        event.preventDefault();
+        showErrors(messagesDescription, textarea);
+      }
+      // restoreDefault();
+    }
+    // проверка,если хештеги отсутствуют
+    function isEmptyHashtag(hashtags) {
+      return (hashtags.join() === '');
+    }
+    // Проверка первого симовла хештега на равенстов '#'
+    function isFirstSymbolHashtag(hashtags) {
+      for (var i = 0; i < hashtags.length; i++) {
+        if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < 2)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    // Проверка на максимальное количество хештегов
+    function isCountHashtegs(hashtags) {
+      var hashtagsCount = 5;
+      return (hashtags.length > hashtagsCount);
+    }
+    // Проверка длины одного хештега
+    function isMaxLength(hashtags) {
+      var maxLength = 20;
+      for (var i = 0; i < hashtags.length; i++) {
+        if (hashtags[i].length > maxLength) {
+          return (hashtags[i].length > maxLength);
+        }
+      }
+      return false;
+    }
+    // Проверка на одинаковые хештеги
+    function isEqualHashtag(hashtags) {
+      for (var i = 0; i < hashtags.length - 1; i++) {
+        var item = hashtags[i];
+        for (var j = i + 1; j < hashtags.length; j++) {
+          if (item === hashtags[j]) {
             return true;
           }
         }
-        return false;
       }
-      // Проверка на максимальное количество хештегов
-      function isCountHashtegs(hashtags) {
-        var hashtagsCount = 5;
-        return (hashtags.length > hashtagsCount);
+      return false;
+    }
+    // Проверка ввода комментария.
+    function isDescriptionEmpty(description) {
+      return (description === '');
+    }
+    // Проверка минимальной длины комментария.
+    function isMinLengthDescription(description) {
+      return (description.length < 30);
+    }
+    // Проверка максимальной длины комментария
+    function isMaxLengthDescription(description) {
+      return (description.length > 100);
+    }
+    // Функция вывода ошибок
+    function showErrors(errors, element) {
+      var ul = document.createElement('ul');
+      element.style.borderColor = 'red';
+      ul.className = 'errors';
+      ul.style.listStyle = 'none';
+      ul.style.color = 'red';
+      element.parentElement.appendChild(ul);
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < errors.length; i++) {
+        var li = document.createElement('li');
+        li.textContent = errors[i];
+        fragment.appendChild(li);
       }
-      // Проверка длины одного хештега
-      function isMaxLength(hashtags) {
-        var maxLength = 20;
-
-        for (var i = 0; i < hashtags.length; i++) {
-          if (hashtags[i].length > maxLength) {
-            return (hashtags[i].length > maxLength);
-          }
-        }
-        return false;
+      ul.appendChild(fragment);
+    }
+    /* function restoreDefault() {
+      uploadResize.value = '55%';
+      uploadOverlay.querySelector('.upload-form-preview').className = 'upload-form-preview';
+      form.querySelector('.upload-form-hashtags').value = '';
+      form.querySelector('.upload-form-description').value = '';
+    }*/
+    function removeErrors() {
+      var errors = form.querySelectorAll('.errors');
+      for (var i = 0; i < errors.length; i++) {
+        errors[i].remove();
       }
-      // Проверка на одинаковые хештеги
-      function isEqualHashtag(hashtags) {
-        for (var i = 0; i < hashtags.length - 1; i++) {
-          var item = hashtags[i];
-          for (var j = i + 1; j < hashtags.length; j++) {
-            if (item === hashtags[j]) {
-              return true;
-            }
-          }
-        }
-        return false;
-      }
-      // Проверка ввода комментария.
-      function isDescriptionEmpty(description) {
-        return (description === '');
-      }
-      // Проверка минимальной длины комментария.
-      function isMinLengthDescription(description) {
-        return (description.length < 30);
-      }
-      // Проверка максимальной длины комментария
-      function isMaxLengthDescription(description) {
-        return (description.length > 100);
-      }
-      // Функция вывода ошибок
-      function showErrors(errors, element) {
-        var ul = document.createElement('ul');
-        element.style.borderColor = 'red';
-        ul.className = 'errors';
-        ul.style.listStyle = 'none';
-        ul.style.color = 'red';
-        element.parentElement.appendChild(ul);
-        var fragment = document.createDocumentFragment();
-        for (var i = 0; i < errors.length; i++) {
-          var li = document.createElement('li');
-          li.textContent = errors[i];
-          fragment.appendChild(li);
-        }
-        ul.appendChild(fragment);
-      }
-      /* function restoreDefault() {
-        uploadResize.value = '55%';
-        uploadOverlay.querySelector('.upload-form-preview').className = 'upload-form-preview';
-        form.querySelector('.upload-form-hashtags').value = '';
-        form.querySelector('.upload-form-description').value = '';
-      }*/
-      function removeErrors() {
-        var errors = form.querySelectorAll('.errors');
-        for (var i = 0; i < errors.length; i++) {
-          errors[i].remove();
-        }
-      }
-    }// конец валидации
+    }
   }
 })();
