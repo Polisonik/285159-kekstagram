@@ -369,10 +369,8 @@
       }
       // Проверка первого симовла хештега на равенстов '#'
       function isFirstSymbolHashtag(hashtags) {
-				debugger;
         for (var i = 0; i < hashtags.length; i++) {
-					console.log(typeof(hashtags[i][0]));
-					if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] == '#') && (hashtags[i].length < 2)) {
+          if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < 2)) {
             return true;
           }
         }
@@ -434,12 +432,12 @@
         }
         ul.appendChild(fragment);
       }
-      function restoreDefault() {
+      /* function restoreDefault() {
         uploadResize.value = '55%';
         uploadOverlay.querySelector('.upload-form-preview').className = 'upload-form-preview';
         form.querySelector('.upload-form-hashtags').value = '';
         form.querySelector('.upload-form-description').value = '';
-			}
+      }*/
       function removeErrors() {
         var errors = form.querySelectorAll('.errors');
         for (var i = 0; i < errors.length; i++) {
