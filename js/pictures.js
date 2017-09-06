@@ -367,7 +367,7 @@
       }
       // проверка,если хештеги отсутствуют
       function isEmptyHashtag(hashtags) {
-        return (hashtags === '');
+        return (!!hashtags);
       }
       // Проверка первого симовла хештега на равенстов '#'
       function isFirstSymbolHashtag(hashtags) {
@@ -408,7 +408,7 @@
       }
       // Проверка ввода комментария.
       function isDescriptionEmpty(description) {
-        return (description === '');
+        return (!!description);
       }
       // Проверка минимальной длины комментария.
       function isMinLengthDescription(description) {
