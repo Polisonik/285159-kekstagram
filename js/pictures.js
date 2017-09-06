@@ -361,18 +361,18 @@
           event.preventDefault();
           showErrors(messagesDescription, textarea);
         }
-        /* }else {
-        form.submit();
-        restoreDefault();*/
+        // restoreDefault();
       }
       // проверка,если хештеги отсутствуют
       function isEmptyHashtag(hashtags) {
-        return (!!hashtags);
+        return (hashtags.join() === '');
       }
       // Проверка первого симовла хештега на равенстов '#'
       function isFirstSymbolHashtag(hashtags) {
+				debugger;
         for (var i = 0; i < hashtags.length; i++) {
-          if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#')) {
+					console.log(typeof(hashtags[i][0]));
+					if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] == '#') && (hashtags[i].length < 2)) {
             return true;
           }
         }
@@ -408,7 +408,7 @@
       }
       // Проверка ввода комментария.
       function isDescriptionEmpty(description) {
-        return (!!description);
+        return (description === '');
       }
       // Проверка минимальной длины комментария.
       function isMinLengthDescription(description) {
@@ -434,12 +434,12 @@
         }
         ul.appendChild(fragment);
       }
-      /* function restoreDefault() {
+      function restoreDefault() {
         uploadResize.value = '55%';
         uploadOverlay.querySelector('.upload-form-preview').className = 'upload-form-preview';
         form.querySelector('.upload-form-hashtags').value = '';
         form.querySelector('.upload-form-description').value = '';
-			} */
+			}
       function removeErrors() {
         var errors = form.querySelectorAll('.errors');
         for (var i = 0; i < errors.length; i++) {
