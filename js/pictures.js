@@ -334,7 +334,7 @@
 
       removeErrors();
       if (isFirstSymbolHashtag(hashtags)) {
-        messagesInput.push('хэш-тег начинается с символа `#` и состоит из одного слова');
+        messagesInput.push('хэш-тег должен начинаться с символа `#` и состоять из одного слова');
       }
       if (isCountHashtegs(hashtags)) {
         messagesInput.push('нельзя указать больше пяти хэш-тегов');
