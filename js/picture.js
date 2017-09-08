@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
 	// добваление в блок picture-comments новых DOM элементов span с комментариями для фотографии
   function addCommentsToPhoto(comments) {

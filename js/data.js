@@ -1,6 +1,5 @@
 'use strict';
 (function () {
- // generationPhotosDescription();
   // Генерация случайного целого числа из диапазоана [min, max];
   function getRandomNumber(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -45,7 +44,7 @@
   }
   // Заполнение массива из 25 объектов c описанием фотографий пользователей
   window.data = {
-    getDate: function generationPhotosDescription() {
+    getData: function generationPhotosDescription() {
       var photoNumber = 25;
       var photos = [];
       var urlPhotos = getUrl();
@@ -57,4 +56,4 @@
       return photos;
     }
   };
-})(); // функция дожна вернуть массив с информацией о фотографиях.
+})();
