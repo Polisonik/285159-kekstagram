@@ -57,8 +57,9 @@
     var ul = document.createElement('ul');
     element.style.borderColor = 'red';
     ul.className = 'errors';
-    ul.style.listStyle = 'none';
-    ul.style.color = 'red';
+		ul.style.cssText="listStyle: none;\
+    color: red;\
+    ";    
     element.parentElement.appendChild(ul);
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < errors.length; i++) {

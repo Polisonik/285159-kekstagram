@@ -19,6 +19,7 @@
   function openUploadOverlay() {
     controlResize();
     applyEffect();
+		moveToggle();
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onKeydownEscClose);
     uploadCansel.addEventListener('click', onClickCansel);
@@ -131,4 +132,50 @@
     }
     photo.className = defaultClass + ' ' + 'effect-' + filterName;
   }
+	// Оживление ползунка
+	//1. <div class="upload-effect-level-line"> - шкала длина 455 px
+	//2. <div class="upload-effect-level-pin"></div>  - 18px X 18px ползунок
+	//3. <div class="upload-effect-level-val"></div> - линия заполнения, 20% начальное значение.
+	function moveToggle() {
+		
+		var toggle = document.querySelector('.upload-effect-level-pin');
+		var line = document.querySelector('.upload-effect-level-line');
+    var container = document.querySelector('.upload-effect-level');
+		
+		toggle.addEventListener('mousedown', onMouseDown);
+		function onMouseDown(event) {
+			event.preventDefault();
+			var startX = event.clientX;
+			var widthToggle = toggle.clientWidth;
+		  var widthLine = line.clientWidth;
+								
+			document.addEventListener('mousemove', onMouseMove);
+			document.addEventListener('mouseup', onMouseUp);
+			
+			function onMouseMove(moveEvent) {
+				moveEvent.preventDefault();
+				
+				var shiftX = startX -  moveEvent.clientX;
+				var leftLimit =  line.offsetLeft - widthToggle / 2;
+				var rightLimit = line.offsetWidth;
+				if ((toggle.offsetLeft - shiftX) <= leftLimit) {
+					toggle.style.left = leftLimit;
+					//startX = leftLimit;
+				} else if ((toggle.offsetLeft - shiftX) > rightLimit) {
+					toggle.style.left = rightLimit;
+					//startX = rightLimit;
+				} else {
+					toggle.style.left = (toggle.offsetLeft - shiftX) + 'px';
+					//
+				}
+				startX = moveEvent.clientX;
+			}
+			function onMouseUp(upEvent) {
+				upEvent.preventDefault();
+				document.removeEventListener('mousemove', onMouseMove);
+			  document.removeEventListener('mouseup', onMouseUp);				
+			}
+		}
+	}
+	
 })();
