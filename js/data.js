@@ -1,41 +1,6 @@
 'use strict';
-
 (function () {
-  addContentPictures();
-
-	// добваление в блок picture-comments новых DOM элементов span с комментариями
-  function addCommentsToPhoto(comments) {
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < comments.length; i++) {
-      var newElement = document.createElement('span');
-      newElement.textContent = comments[i];
-      fragment.appendChild(newElement);
-    }
-    return fragment;
-  }
-  // Заполнение шаблона для одной фотографии
-  function renderPhoto(picture) {
-    var elementTemplate = document.querySelector('#picture-template').content;
-    var newElement = elementTemplate.cloneNode(true);
-
-    newElement.querySelector('img').src = picture.url;
-    newElement.querySelector('.picture-likes').textContent = picture.likes;
-    newElement.querySelector('.picture-comments').appendChild(addCommentsToPhoto(picture.comments));
-    return newElement;
-  }
-  // Добавление созданных DOM-элементов в блок .pictures
-  function addContentPictures() {
-    var arrayPictures = generationPhotosDescription();
-    var numberPhotos = 25;
-    var elementList = document.querySelector('.pictures');
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < numberPhotos; i++) {
-      fragment.appendChild(renderPhoto(arrayPictures[i]));
-    }
-    elementList.appendChild(fragment);
-  }
+ // generationPhotosDescription();
   // Генерация случайного целого числа из диапазоана [min, max];
   function getRandomNumber(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -43,7 +8,7 @@
   // Генерация массива адресов картинок
   function getUrl() {
     var array = [];
-    var maxNumber = 25;
+    var maxNumber = 25; //
 
     for (var i = 1; i <= maxNumber; i++) {
       array.push('photos/' + i + '.jpg');
@@ -74,20 +39,22 @@
     }
     return photoComments;
   }
-  // Заполнение массива из 25 объектов c описанием фотографий пользователей
-  function generationPhotosDescription() {
-    var photoNumber = 25;
-    var photos = [];
-    var urlPhotos = getUrl();
-
-    urlPhotos.sort(compareRandom); // случайная перестановка элементов массива
-    for (var i = 0; i < photoNumber; i++) {
-      photos.push({url: urlPhotos[i], likes: getLikesNumber(), comments: getComments()});
-    }
-    return photos;
-  }
-  // Функция сравнения для получения случйной перестановки элементов массива
+	// Функция сравнения для получения случйной перестановки элементов массива
   function compareRandom(a, b) {
     return Math.random() - 0.5;
   }
-})();
+  // Заполнение массива из 25 объектов c описанием фотографий пользователей
+  window.data = {
+    getDate: function generationPhotosDescription() {
+      var photoNumber = 25;
+      var photos = [];
+      var urlPhotos = getUrl();
+
+      urlPhotos.sort(compareRandom); // случайная перестановка элементов массива
+      for (var i = 0; i < photoNumber; i++) {
+        photos.push({url: urlPhotos[i], likes: getLikesNumber(), comments: getComments()});
+      }
+      return photos;
+    }
+  };
+})(); // функция дожна вернуть массив с информацией о фотографиях.
