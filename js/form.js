@@ -141,6 +141,7 @@
 		var toggle = document.querySelector('.upload-effect-level-pin');
 		var line = document.querySelector('.upload-effect-level-line');
     var container = document.querySelector('.upload-effect-level');
+		var bar =document.querySelector('.upload-effect-level-val');
 		
 		toggle.addEventListener('mousedown', onMouseDown);
 		function onMouseDown(event) {
@@ -156,16 +157,19 @@
 				moveEvent.preventDefault();
 				
 				var shiftX = startX -  moveEvent.clientX;
-				var leftLimit =  line.offsetLeft - widthToggle / 2;
+				var leftLimit =  line.offsetLeft - widthToggle;
 				var rightLimit = line.offsetWidth;
 				if ((toggle.offsetLeft - shiftX) <= leftLimit) {
-					toggle.style.left = leftLimit;
+					toggle.style.left = '0%';
+					bar.style.width = '0%';
 					//startX = leftLimit;
 				} else if ((toggle.offsetLeft - shiftX) > rightLimit) {
-					toggle.style.left = rightLimit;
+					toggle.style.left = '100%';
+					bar.style.width = '100%';
 					//startX = rightLimit;
 				} else {
-					toggle.style.left = (toggle.offsetLeft - shiftX) + 'px';
+					toggle.style.left = (toggle.offsetLeft - shiftX) * 100 / 455 + '%';
+					bar.style.width = (toggle.offsetLeft - shiftX)* 100 / 455 + '%';
 					//
 				}
 				startX = moveEvent.clientX;
