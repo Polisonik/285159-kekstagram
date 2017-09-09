@@ -46,20 +46,21 @@
   }
   // Проверка минимальной длины комментария.
   function isMinLengthDescription(description) {
-    return (description.length < 30);
+    var minLengthDescription = 30;
+    return (description.length < minLengthDescription);
   }
   // Проверка максимальной длины комментария
   function isMaxLengthDescription(description) {
-    return (description.length > 100);
+    var maxLengthDescription = 100;
+    return (description.length > maxLengthDescription);
   }
   // Функция вывода ошибок
   function showErrors(errors, element) {
     var ul = document.createElement('ul');
     element.style.borderColor = 'red';
     ul.className = 'errors';
-		ul.style.cssText="listStyle: none;\
-    color: red;\
-    ";    
+    ul.style.listStyle = 'none';
+    ul.style.color = 'red';
     element.parentElement.appendChild(ul);
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < errors.length; i++) {

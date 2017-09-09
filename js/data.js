@@ -1,9 +1,5 @@
 'use strict';
 (function () {
-  // Генерация случайного целого числа из диапазоана [min, max];
-  function getRandomNumber(min, max) {
-    return min + Math.floor(Math.random() * (max + 1 - min));
-  }
   // Генерация массива адресов картинок
   function getUrl() {
     var array = [];
@@ -19,21 +15,21 @@
     var minNumber = 15;
     var maxNumber = 200;
 
-    return getRandomNumber(minNumber, maxNumber);
+    return window.utils.getRandomNumber(minNumber, maxNumber);
   }
   // Генерация комментариев;
   function getComments() {
     var comments = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-    var commentsCount = getRandomNumber(1, 2); // возвращает случайное значение: 1 - 1 комментарии к фотографии, 2 - два комментария к фотографии;
+    var commentsCount = window.utils.getRandomNumber(1, 2); // возвращает случайное значение: 1 - 1 комментарии к фотографии, 2 - два комментария к фотографии;
     var maxNumberComments = 2;
-    var indexFirst = getRandomNumber(0, comments.length - 1);
+    var indexFirst = window.utils.getRandomNumber(0, comments.length - 1);
     var photoComments = [];
     var firstComments = comments[indexFirst];
     photoComments.push(firstComments);
     comments.splice(indexFirst, 1);
 
     if (commentsCount === maxNumberComments) {
-      var IndexSecond = getRandomNumber(0, comments.length - 1);
+      var IndexSecond = window.utils.getRandomNumber(0, comments.length - 1);
       photoComments.push(comments[IndexSecond]);
     }
     return photoComments;
