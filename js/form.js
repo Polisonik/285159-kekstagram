@@ -136,43 +136,59 @@
 	//1. <div class="upload-effect-level-line"> - шкала длина 455 px
 	//2. <div class="upload-effect-level-pin"></div>  - 18px X 18px ползунок
 	//3. <div class="upload-effect-level-val"></div> - линия заполнения, 20% начальное значение.
+	//4. Для фильтра «Хром» — filter: grayscale(0..1);
 	function moveToggle() {
 		
 		var toggle = document.querySelector('.upload-effect-level-pin');
 		var line = document.querySelector('.upload-effect-level-line');
     var container = document.querySelector('.upload-effect-level');
 		var bar =document.querySelector('.upload-effect-level-val');
+		//var effect = document.querySelector('.upload-effect-preview');
 		
 		toggle.addEventListener('mousedown', onMouseDown);
 		function onMouseDown(event) {
 			event.preventDefault();
 			var startX = event.clientX;
 			var widthToggle = toggle.clientWidth;
-		  var widthLine = line.clientWidth;
-								
+		  var widthLine = line.offsetWidth;
+											
 			document.addEventListener('mousemove', onMouseMove);
 			document.addEventListener('mouseup', onMouseUp);
 			
 			function onMouseMove(moveEvent) {
 				moveEvent.preventDefault();
-				
-				var shiftX = startX -  moveEvent.clientX;
-				var leftLimit =  line.offsetLeft - widthToggle;
+
+				var shiftX = startX - moveEvent.clientX;
+				var leftLimit = line.offsetLeft - widthToggle;
 				var rightLimit = line.offsetWidth;
+				
 				if ((toggle.offsetLeft - shiftX) <= leftLimit) {
 					toggle.style.left = '0%';
 					bar.style.width = '0%';
-					//startX = leftLimit;
 				} else if ((toggle.offsetLeft - shiftX) > rightLimit) {
 					toggle.style.left = '100%';
 					bar.style.width = '100%';
-					//startX = rightLimit;
 				} else {
 					toggle.style.left = (toggle.offsetLeft - shiftX) * 100 / 455 + '%';
 					bar.style.width = (toggle.offsetLeft - shiftX)* 100 / 455 + '%';
-					//
 				}
+				
 				startX = moveEvent.clientX;
+				var effect = parseInt(toggle.style.left, 10) / 100;
+				
+				if (photo.classList.contains('effect-chrome')) {
+					photo.style.filter = 'grayscale(' + effect + ')';
+				} else if (photo.classList.contains('effect-sepia')) {
+					photo.style.filter = 'sepia(' + effect + ')';
+				} else if (photo.classList.contains('effect-marvin')) {
+					photo.style.filter = 'invert(' + effect + ')';
+				} else if (photo.classList.contains('effect-phobos')) {
+					photo.style.filter = 'blur(' + effect + ')';
+			  } else if (photo.classList.contains('effect-heat')) {
+					photo.style.filter = 'brightness(' + effect + ')';
+				} else {
+					toggle.style.display = 'none';
+				}
 			}
 			function onMouseUp(upEvent) {
 				upEvent.preventDefault();
