@@ -46,11 +46,13 @@
   }
   // Проверка минимальной длины комментария.
   function isMinLengthDescription(description) {
-    return (description.length < 30);
+    var minLengthDescription = 30;
+    return (description.length < minLengthDescription);
   }
   // Проверка максимальной длины комментария
   function isMaxLengthDescription(description) {
-    return (description.length > 100);
+    var maxLengthDescription = 100;
+    return (description.length > maxLengthDescription);
   }
   // Функция вывода ошибок
   function showErrors(errors, element) {

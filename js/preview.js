@@ -57,8 +57,7 @@
   }
   // Обработка события нажатия на Esc при отрытом режиме просмотра фотографии
   function onKeydownEsc(event) {
-    var ESC = 27;
-    if (event.keyCode === ESC) {
+    if (event.keyCode === window.utils.ESC) {
       closePopup();
     }
   }
@@ -70,9 +69,8 @@
   // Обработка события нажатия Enter на миниатюру фотографии
   function onKeydownEnterPhoto(event) {
     event.preventDefault();
-    var ENTER = 13;
     var target = event.target;
-    if (event.keyCode === ENTER) {
+    if (event.keyCode === window.utils.ENTER) {
       if (target.tagName === 'IMG') {
         getDataOfPhoto(event);
         openPopup();
@@ -85,8 +83,7 @@
   // Обработка события нажатия клавиши Enter для закрытия режима просмотра фотографии
   function onKeydownEnterCross(event) {
     event.preventDefault();
-    var ENTER = 13;
-    if (event.keyCode === ENTER) {
+    if (event.keyCode === window.utils.ENTER) {
       closePopup();
     }
   }
