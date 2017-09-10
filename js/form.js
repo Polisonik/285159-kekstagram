@@ -24,8 +24,8 @@
     moveToggle();
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onKeydownEscClose);
-    uploadCansel.addEventListener('click', onClickCansel);
-    uploadCansel.addEventListener('keydown', onKeydownEnterCansel);
+    uploadCansel.addEventListener('click', onClickCanсel);
+    uploadCansel.addEventListener('keydown', onKeydownEnterCanсel);
     form.addEventListener('submit', onSubmit);
     toggle.style.display = 'none';
     bar.style.width = '0%';
@@ -33,8 +33,8 @@
   function closeUploadOverlay() {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
-    uploadCansel.removeEventListener('click', onClickCansel);
-    uploadCansel.removeEventListener('keydown', onKeydownEnterCansel);
+    uploadCansel.removeEventListener('click', onClickCanсel);
+    uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
     buttonDecrease.removeEventListener('click', onClickDesrease);
     buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
     buttonIncrease.removeEventListener('click', onClickIncrease);
@@ -52,10 +52,10 @@
       closeUploadOverlay();
     }
   }
-  function onClickCansel() {
+  function onClickCanсel() {
     closeUploadOverlay();
   }
-  function onKeydownEnterCansel(event) {
+  function onKeydownEnterCanсel(event) {
     if (event.keyCode === window.utils.ENTER) {
       closeUploadOverlay();
     }
