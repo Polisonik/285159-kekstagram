@@ -22,7 +22,7 @@
     toggle.style.display = 'none';
     bar.style.width = '0%';
     window.initializeScale.initialize(scaleElement, adjustScale);
-    window.initializeFilters.apply(blockEffect, applyFilter);
+    window.initializeFilters(blockEffect, applyFilter);
     moveToggle();
     document.addEventListener('keydown', onKeydownEscClose);
     uploadCansel.addEventListener('click', onClickCanсel);
