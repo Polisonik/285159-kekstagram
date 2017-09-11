@@ -5,18 +5,13 @@
   var uploadFile = form.querySelector('#upload-file');
   var uploadOverlay = form.querySelector('.upload-overlay');
   var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
-  //var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
-  //var buttonIncrease = uploadOverlay.querySelector('.upload-resize-controls-button-inc');
   var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
-  var uploadResize = uploadOverlay.querySelector('.upload-resize-controls');
-  
   var toggle = document.querySelector('.upload-effect-level-pin');
   var bar = document.querySelector('.upload-effect-level-val');
   var line = document.querySelector('.upload-effect-level-line');
-	
+
   var scaleElement = document.querySelector('.upload-resize-controls');
-	var photo = uploadOverlay.querySelector('.effect-image-preview');
-  
+  var photo = uploadOverlay.querySelector('.effect-image-preview');
 
   uploadFile.addEventListener('change', onInputFile);
   function onInputFile() {
@@ -38,10 +33,6 @@
     document.removeEventListener('keydown', onKeydownEscClose);
     uploadCansel.removeEventListener('click', onClickCanсel);
     uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
-    buttonDecrease.removeEventListener('click', onClickDesrease);
-    buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
-    buttonIncrease.removeEventListener('click', onClickIncrease);
-    buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
     blockEffect.removeEventListener('click', onClickEffect);
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
@@ -63,13 +54,12 @@
       closeUploadOverlay();
     }
   }
-  	
   // Функция изменения мастштаба фотографии
   function adjustScale(scale) {
     photo.style.transform = 'scale(' + scale / window.utils.PERCENT + ')';
-  }	
-	window.initializeScale.init(scaleElement, adjustScale);
-	
+  }
+  window.initializeScale.init(scaleElement, adjustScale);
+
   // Добавление эффектов
   function applyEffect() {
     blockEffect.addEventListener('click', onClickEffect);

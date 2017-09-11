@@ -17,32 +17,51 @@
 
     buttonDecrease.addEventListener('click', onClickDesrease);
     buttonIncrease.addEventListener('click', onClickIncrease);
+    buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
+    buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
   }
   // Получаем текущее значение масштаба
   function getResizeValue() {
     return parseInt(resizeValue.value, 10);
   }
-  // Обработка события нажатия на кнопку уменьшения масштаба
-  function onClickDesrease() {
+
+	// Функция уменьшнния значения масштаба
+  function getValueDesrease() {
     var value = getResizeValue() - step;
     if (value < min) {
       value = min;
     }
     resizeValue.value = value + '%';
-
-    if (typeof resizeScale === 'function') {
-      resizeScale(value);
-    }
+    return value;
   }
-  // Обработка события нажатия на кнопку увеличения масштаба
-  function onClickIncrease() {
+  // Функция увеличения значения масштаба
+  function getValueIncrease() {
     var value = getResizeValue() + step;
+
     if (value > max) {
       value = max;
     }
     resizeValue.value = value + '%';
-    if (typeof resizeScale === 'function') {
-      resizeScale(value);
+    return value;
+  }
+  function onClickDesrease(event) {
+    var scale = getValueDesrease();
+    resizeScale(scale);
+  }
+  function onClickIncrease() {
+    var scale = getValueIncrease();
+    resizeScale(scale);
+  }
+  function onKeydownEnterDesrease(event) {
+    if (event.keyCode === window.utils.ENTER) {
+      var scale = getValueDesrease();
+      resizeScale(scale);
+    }
+  }
+  function onKeydownEnterIncrease(event) {
+    if (event.keyCode === window.utils.ENTER) {
+      var scale = getValueIncrease();
+      resizeScale(scale);
     }
   }
   window.initializeScale = {
