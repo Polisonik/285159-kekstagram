@@ -18,21 +18,22 @@
     openUploadOverlay();
   }
   function openUploadOverlay() {
-    moveToggle();
     uploadOverlay.classList.remove('hidden');
+    toggle.style.display = 'none';
+    bar.style.width = '0%';
+    window.initializeScale.initialize(scaleElement, adjustScale);
+    window.initializeFilters.apply(blockEffect, applyFilter);
+    moveToggle();
     document.addEventListener('keydown', onKeydownEscClose);
     uploadCansel.addEventListener('click', onClickCanсel);
     uploadCansel.addEventListener('keydown', onKeydownEnterCanсel);
     form.addEventListener('submit', onSubmit);
-    toggle.style.display = 'none';
-    bar.style.width = '0%';
   }
   function closeUploadOverlay() {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
     uploadCansel.removeEventListener('click', onClickCanсel);
     uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
-    blockEffect.removeEventListener('click', onClickEffect);
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
@@ -57,47 +58,13 @@
   function adjustScale(scale) {
     photo.style.transform = 'scale(' + scale / window.utils.PERCENT + ')';
   }
-  window.initializeScale.initialize(scaleElement, adjustScale);
 
-  // Добавление эффектов	
+  // Добавление эффектов
   function applyFilter(defaultClass, filterName) {
-		 photo.className = defaultClass + ' ' + 'effect-' + filterName;
-	}
-	window.initializeFilters.apply(blockEffect, applyFilter);
-	//------------
-			
-  // Сбрасывание значений фильтров к значениям, которые были по умолчанию
-  function resetDefaultEffect() {
-    var defaultClass = 'effect-image-preview';
-    var effectByDefault = {
-      none: 'none',
-      chrome: 'grayscale(1)',
-      sepia: 'sepia(1)',
-      marvin: 'invert(100%)',
-      phobos: 'blur(5px)',
-      heat: 'brightness(3)'
-    };
-
-    toggle.style.left = '20%';
-    toggle.style.display = 'block';
-    bar.style.width = '20%';
-    if (photo.classList.contains('effect-chrome')) {
-      photo.style.filter = effectByDefault.chrome;
-    } else if (photo.classList.contains('effect-sepia')) {
-      photo.style.filter = effectByDefault.sepia;
-    } else if (photo.classList.contains('effect-marvin')) {
-      photo.style.filter = effectByDefault.marvin;
-    } else if (photo.classList.contains('effect-phobos')) {
-      photo.style.filter = effectByDefault.phobos;
-    } else if (photo.classList.contains('effect-heat')) {
-      photo.style.filter = effectByDefault.heat;
-    } else if (photo.classList.contains('effect-none') || photo.className === defaultClass) {
-      photo.style.filter = effectByDefault.none;
-      toggle.style.display = 'none';
-      bar.style.width = '0%';
-    }
+    photo.className = defaultClass + ' ' + 'effect-' + filterName;
   }
-  // Оживление ползунка
+
+	// Оживление ползунка
   function moveToggle() {
     toggle.addEventListener('mousedown', onMouseDown);
   }
@@ -132,6 +99,7 @@
       document.removeEventListener('mouseup', onMouseUp);
     }
   }
+
   function changeSaturation() {
     var phobosMultiplier = 3;
     var heatMultiplier = 3;
