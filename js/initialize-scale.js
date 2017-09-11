@@ -46,26 +46,34 @@
   }
   function onClickDesrease(event) {
     var scale = getValueDesrease();
-    resizeScale(scale);
+    if (typeof resizeScale === 'function') {
+      resizeScale(scale);
+    }
   }
   function onClickIncrease() {
     var scale = getValueIncrease();
-    resizeScale(scale);
+    if (typeof resizeScale === 'function') {
+      resizeScale(scale);
+    }
   }
   function onKeydownEnterDesrease(event) {
     if (event.keyCode === window.utils.ENTER) {
       var scale = getValueDesrease();
-      resizeScale(scale);
+      if (typeof resizeScale === 'function') {
+        resizeScale(scale);
+      }
     }
   }
   function onKeydownEnterIncrease(event) {
     if (event.keyCode === window.utils.ENTER) {
       var scale = getValueIncrease();
-      resizeScale(scale);
+      if (typeof resizeScale === 'function') {
+        resizeScale(scale);
+      }
     }
   }
   window.initializeScale = {
-    init: function (scaleElement, callback) {
+    initialize: function (scaleElement, callback) {
       controlResize(scaleElement);
       resizeScale = callback;
     }

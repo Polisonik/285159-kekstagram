@@ -18,7 +18,6 @@
     openUploadOverlay();
   }
   function openUploadOverlay() {
-    applyEffect();
     moveToggle();
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onKeydownEscClose);
@@ -58,23 +57,15 @@
   function adjustScale(scale) {
     photo.style.transform = 'scale(' + scale / window.utils.PERCENT + ')';
   }
-  window.initializeScale.init(scaleElement, adjustScale);
+  window.initializeScale.initialize(scaleElement, adjustScale);
 
-  // Добавление эффектов
-  function applyEffect() {
-    blockEffect.addEventListener('click', onClickEffect);
-  }
-  function onClickEffect(event) {
-    var target = event.target;
-    var filterName = target.value;
-    var defaultClass = 'effect-image-preview';
-
-    if (target.tagName !== 'INPUT') {
-      return;
-    }
-    photo.className = defaultClass + ' ' + 'effect-' + filterName;
-    resetDefaultEffect();
-  }
+  // Добавление эффектов	
+  function applyFilter(defaultClass, filterName) {
+		 photo.className = defaultClass + ' ' + 'effect-' + filterName;
+	}
+	window.initializeFilters.apply(blockEffect, applyFilter);
+	//------------
+			
   // Сбрасывание значений фильтров к значениям, которые были по умолчанию
   function resetDefaultEffect() {
     var defaultClass = 'effect-image-preview';
