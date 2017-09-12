@@ -14,7 +14,6 @@
     resizeValue = scaleElement.querySelector('.upload-resize-controls-value');
     buttonDecrease = scaleElement.querySelector('.upload-resize-controls-button-dec');
     buttonIncrease = scaleElement.querySelector('.upload-resize-controls-button-inc');
-
     buttonDecrease.addEventListener('click', onClickDesrease);
     buttonIncrease.addEventListener('click', onClickIncrease);
     buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
@@ -37,7 +36,6 @@
   // Функция увеличения значения масштаба
   function getValueIncrease() {
     var value = getResizeValue() + step;
-
     if (value > max) {
       value = max;
     }

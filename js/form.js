@@ -99,7 +99,6 @@
       document.removeEventListener('mouseup', onMouseUp);
     }
   }
-
   function changeSaturation() {
     var phobosMultiplier = 3;
     var heatMultiplier = 3;
