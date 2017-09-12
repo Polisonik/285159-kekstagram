@@ -5,41 +5,35 @@
   var uploadFile = form.querySelector('#upload-file');
   var uploadOverlay = form.querySelector('.upload-overlay');
   var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
-  var buttonDecrease = uploadOverlay.querySelector('.upload-resize-controls-button-dec');
-  var buttonIncrease = uploadOverlay.querySelector('.upload-resize-controls-button-inc');
   var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
-  var uploadResize = uploadOverlay.querySelector('.upload-resize-controls');
-  var photo = uploadOverlay.querySelector('.effect-image-preview');
   var toggle = document.querySelector('.upload-effect-level-pin');
   var bar = document.querySelector('.upload-effect-level-val');
   var line = document.querySelector('.upload-effect-level-line');
+
+  var scaleElement = document.querySelector('.upload-resize-controls');
+  var photo = uploadOverlay.querySelector('.effect-image-preview');
 
   uploadFile.addEventListener('change', onInputFile);
   function onInputFile() {
     openUploadOverlay();
   }
   function openUploadOverlay() {
-    controlResize();
-    applyEffect();
-    moveToggle();
     uploadOverlay.classList.remove('hidden');
+    toggle.style.display = 'none';
+    bar.style.width = '0%';
+    window.initializeScale.initialize(scaleElement, adjustScale);
+    window.initializeFilters(blockEffect, applyFilter);
+    moveToggle();
     document.addEventListener('keydown', onKeydownEscClose);
     uploadCansel.addEventListener('click', onClickCanсel);
     uploadCansel.addEventListener('keydown', onKeydownEnterCanсel);
     form.addEventListener('submit', onSubmit);
-    toggle.style.display = 'none';
-    bar.style.width = '0%';
   }
   function closeUploadOverlay() {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
     uploadCansel.removeEventListener('click', onClickCanсel);
     uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
-    buttonDecrease.removeEventListener('click', onClickDesrease);
-    buttonDecrease.removeEventListener('keydown', onKeydownEnterDesrease);
-    buttonIncrease.removeEventListener('click', onClickIncrease);
-    buttonIncrease.removeEventListener('keydown', onKeydownEnterIncrease);
-    blockEffect.removeEventListener('click', onClickEffect);
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
@@ -60,112 +54,17 @@
       closeUploadOverlay();
     }
   }
-  // Изменение масштаба фотографии
-  function controlResize() {
-    buttonDecrease.addEventListener('click', onClickDesrease);
-    buttonDecrease.addEventListener('keydown', onKeydownEnterDesrease);
-    buttonIncrease.addEventListener('click', onClickIncrease);
-    buttonIncrease.addEventListener('keydown', onKeydownEnterIncrease);
-  }
-  // Функция уменьшнния значения масштаба
-  function getValueDesrease() {
-    var inputData = uploadResize.querySelector('.upload-resize-controls-value');
-    var initialValue = parseInt(inputData.value, 10);
-    var min = 25;
-    var step = 25;
-    var value = initialValue - step;
-    if (value < min) {
-      value = min;
-    }
-    inputData.value = value + '%';
-    return value;
-  }
-  // Функция увеличения значения масштаба
-  function getValueIncrease() {
-    var inputData = uploadResize.querySelector('.upload-resize-controls-value');
-    var initialValue = parseInt(inputData.value, 10);
-    var max = 100;
-    var step = 25;
-    var value = initialValue + step;
-
-    if (value > max) {
-      value = max;
-    }
-    inputData.value = value + '%';
-    return value;
-  }
-  function onClickDesrease(event) {
-    getValueDesrease();
-    resizeScale();
-  }
-  function onClickIncrease() {
-    getValueIncrease();
-    resizeScale();
-  }
-  function onKeydownEnterDesrease(event) {
-    if (event.keyCode === window.utils.ENTER) {
-      getValueDesrease();
-      resizeScale();
-    }
-  }
-  function onKeydownEnterIncrease(event) {
-    if (event.keyCode === window.utils.ENTER) {
-      getValueIncrease();
-      resizeScale();
-    }
-  }
   // Функция изменения мастштаба фотографии
-  function resizeScale() {
-    var scaleInput = uploadOverlay.querySelector('.upload-resize-controls-value').value;
-    photo.style.transform = 'scale(' + parseInt(scaleInput, 10) / window.utils.PERCENT + ')';
+  function adjustScale(scale) {
+    photo.style.transform = 'scale(' + scale / window.utils.PERCENT + ')';
   }
+
   // Добавление эффектов
-  function applyEffect() {
-    blockEffect.addEventListener('click', onClickEffect);
-  }
-  function onClickEffect(event) {
-    var target = event.target;
-    var filterName = target.value;
-    var defaultClass = 'effect-image-preview';
-
-    if (target.tagName !== 'INPUT') {
-      return;
-    }
+  function applyFilter(defaultClass, filterName) {
     photo.className = defaultClass + ' ' + 'effect-' + filterName;
-    resetDefaultEffect();
   }
-  // Сбрасывание значений фильтров к значениям, которые были по умолчанию
-  function resetDefaultEffect() {
-    var defaultClass = 'effect-image-preview';
-    var effectByDefault = {
-      none: 'none',
-      chrome: 'grayscale(1)',
-      sepia: 'sepia(1)',
-      marvin: 'invert(100%)',
-      phobos: 'blur(5px)',
-      heat: 'brightness(3)'
-    };
 
-    toggle.style.left = '20%';
-    toggle.style.display = 'block';
-    bar.style.width = '20%';
-    if (photo.classList.contains('effect-chrome')) {
-      photo.style.filter = effectByDefault.chrome;
-    } else if (photo.classList.contains('effect-sepia')) {
-      photo.style.filter = effectByDefault.sepia;
-    } else if (photo.classList.contains('effect-marvin')) {
-      photo.style.filter = effectByDefault.marvin;
-    } else if (photo.classList.contains('effect-phobos')) {
-      photo.style.filter = effectByDefault.phobos;
-    } else if (photo.classList.contains('effect-heat')) {
-      photo.style.filter = effectByDefault.heat;
-    } else if (photo.classList.contains('effect-none') || photo.className === defaultClass) {
-      photo.style.filter = effectByDefault.none;
-      toggle.style.display = 'none';
-      bar.style.width = '0%';
-    }
-  }
-  // Оживление ползунка
+	// Оживление ползунка
   function moveToggle() {
     toggle.addEventListener('mousedown', onMouseDown);
   }
