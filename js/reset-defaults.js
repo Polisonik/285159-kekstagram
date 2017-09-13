@@ -9,8 +9,8 @@
     document.querySelector('.upload-effect-level-pin').style.display = 'none';
     document.querySelector('.upload-effect-level-val').style.width = '0%';
   }
-  window.resetDefaults = { 
-		resetEffect: function (photo) {
+  window.resetDefaults = {
+    resetEffect: function (photo) {
       var defaultClass = 'effect-image-preview';
       var effectByDefault = {
         none: 'none',
@@ -41,18 +41,18 @@
         hideToggle();
       }
     },
-		resetForm: function() {
+    resetForm: function () {
       var defaultData = {
         hashteg: '',
-        comments: '',				
+        comments: '',
         scale: '55%',
         imageClass: 'effect-image-preview'
-      }
-	    var form = document.querySelector('.upload-form');
-	    var checkedInputDefault = form.querySelector('#upload-effect-none');
+      };
+      var form = document.querySelector('.upload-form');
+      var checkedInputDefault = form.querySelector('#upload-effect-none');
       var checkedInputCurrent = form.querySelector('input[name="effect"]:checked');
 
-      form.querySelector('.upload-resize-controls-value').value =defaultData.scale;
+      form.querySelector('.upload-resize-controls-value').value = defaultData.scale;
       form.querySelector('.effect-image-preview').style.transform = 'none';
       form.querySelector('.effect-image-preview').style.filter = 'none';
       form.querySelector('.effect-image-preview').className = defaultData.imageClass;
@@ -61,10 +61,10 @@
       form.querySelector('.upload-effect-level-pin').style.display = 'none';
       form.querySelector('.upload-effect-level-val').style.width = '0%';
 
-      if (checkedInputCurrent.id != 'upload-effect-none') {
+      if (checkedInputCurrent.id !== 'upload-effect-none') {
         checkedInputCurrent.checked = false;
         checkedInputDefault.checked = true;
-		  }
-		}
+      }
+    }
   };
 })();

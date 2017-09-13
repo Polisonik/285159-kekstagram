@@ -37,33 +37,19 @@
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
-	function errorHandler(errorMessage) {
-		var node = document.createElement('div');
-		node.style.zIndex = '100';
-		node.style.margin = '0 auto';
-		node.style.textAlign = 'center';
-		node.style.background = 'grey';
-		node.style.color = 'red';
-		node.style.position = 'absolute';
-		node.style.left = 0;
-		node.style.right = 0;
-		node.style.fontSize = '30px';
-		node.textContent = errorMessage;
-		document.body.insertAdjacentElement('afterbegin', node);
-	}
-	function successHandler() {
-		 window.resetDefaults.resetForm();
-		 closeUploadOverlay();
-	}
+  function successHandler() {
+    window.resetDefaults.resetForm();
+    closeUploadOverlay();
+  }
   function onSubmit(event) {
     window.validate.isValid(event, form);
-		var errors = document.querySelectorAll('.errors');
-		if (!errors.length) {
-			event.preventDefault();
-			window.backend.save(new FormData(form), successHandler, errorHandler);
-		} else {
-			event.preventDefault();
-		} 
+    var errors = document.querySelectorAll('.errors');
+    if (!errors.length) {
+      event.preventDefault();
+      window.backend.save(new FormData(form), successHandler, window.utils.showErrorsConnection);
+    } else {
+      event.preventDefault();
+    }
   }
   function onKeydownEscClose(event) {
     var descriptionPhoto = document.querySelector('.upload-form-description');

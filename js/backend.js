@@ -1,11 +1,11 @@
 'use strict';
 (function () {
   window.backend = {
-    load: function(onLoad, onError) {
+    load: function (onLoad, onError) {
       var SERVER_URL = 'https://1510.dump.academy/kekstagram/data';
       var xhr = new XMLHttpRequest();
 
-			xhr.responseType = 'json';
+      xhr.responseType = 'json';
       xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
           onLoad(xhr.response);
@@ -22,8 +22,8 @@
       xhr.timeout = 10000;
       xhr.open('GET', SERVER_URL);
       xhr.send();
-		},
-		save: function(data, onLoad, onError){
+    },
+    save: function (data, onLoad, onError) {
       var SERVER_URL = 'https://1510.dump.academy/kekstagram';
       var xhr = new XMLHttpRequest();
 
@@ -44,6 +44,6 @@
       xhr.timeout = 10000;
       xhr.open('POST', SERVER_URL);
       xhr.send(data);
-		} 
-	};
+    }
+  };
 })();

@@ -70,19 +70,13 @@
     }
     ul.appendChild(fragment);
   }
-  /* function restoreDefault() {
-    uploadResize.value = '55%';
-    uploadOverlay.querySelector('.upload-form-preview').className = 'upload-form-preview';
-    form.querySelector('.upload-form-hashtags').value = '';
-    form.querySelector('.upload-form-description').value = '';
-  }*/
   function removeErrors() {
     var form = document.querySelector('#upload-select-image');
-		var textarea = form.querySelector('.upload-form-description');
+    var textarea = form.querySelector('.upload-form-description');
     var input = form.querySelector('.upload-form-hashtags');
     var errors = form.querySelectorAll('.errors');
-		textarea.style.borderColor = 'initial';
-		input.style.borderColor = 'initial';
+    textarea.style.borderColor = 'initial';
+    input.style.borderColor = 'initial';
     for (var i = 0; i < errors.length; i++) {
       errors[i].remove();
     }
@@ -119,13 +113,11 @@
         messagesDescription.push('Минимальная длина комментария — 30 символов');
       }
       if (messagesInput.length) {
-				//event.preventDefault();
         showErrors(messagesInput, input);
       }
       if (messagesDescription.length) {
-				//event.preventDefault();
         showErrors(messagesDescription, textarea);
-      }    
+      }
     }
   };
 })();
