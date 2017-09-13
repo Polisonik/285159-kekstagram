@@ -52,7 +52,8 @@
 		document.body.insertAdjacentElement('afterbegin', node);
 	}
 	function successHandler() {
-		closeUploadOverlay();
+		 window.resetDefaults.resetForm();
+		 closeUploadOverlay();
 	}
   function onSubmit(event) {
     window.validate.isValid(event, form);

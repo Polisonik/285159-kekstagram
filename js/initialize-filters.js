@@ -4,7 +4,7 @@
   var photo = document.querySelector('.effect-image-preview');
 
   function initialize(blockEffect) {
-    blockEffect.addEventListener('click', onClickEffect);
+    blockEffect.addEventListener('change', onClickEffect);
   }
   function onClickEffect(event) {
     var target = event.target;
@@ -17,7 +17,7 @@
     if (typeof changeFilter === 'function') {
       changeFilter(defaultClass, filterName);
     }
-    window.resetEffect(photo);
+    window.resetDefaults.resetEffect(photo);
   }
   window.initializeFilters = function (filterElement, callback) {
     initialize(filterElement);
