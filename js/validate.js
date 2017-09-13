@@ -54,7 +54,7 @@
     var maxLengthDescription = 100;
     return (description.length > maxLengthDescription);
   }
-  // Функция вывода ошибок
+  // Функция вывода ошибок валидации полей формы
   function showErrors(errors, element) {
     var ul = document.createElement('ul');
     element.style.borderColor = 'red';

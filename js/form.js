@@ -46,7 +46,7 @@
     var errors = document.querySelectorAll('.errors');
     if (!errors.length) {
       event.preventDefault();
-      window.backend.save(new FormData(form), successHandler, window.utils.showErrorsConnection);
+      window.backend.save(new FormData(form), successHandler, window.utils.showErrors);
     } else {
       event.preventDefault();
     }

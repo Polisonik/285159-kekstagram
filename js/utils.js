@@ -7,7 +7,7 @@
     getRandomNumber: function (min, max) { // Генерация случайного целого числа из диапазоана [min, max];
       return min + Math.floor(Math.random() * (max + 1 - min));
     },
-    showErrorsConnection: function (errorMessage) {
+    showErrors: function (errorMessage) {
       var node = document.createElement('div');
       node.style.zIndex = '100';
       node.style.margin = '0 auto';
