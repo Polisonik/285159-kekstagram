@@ -12,15 +12,13 @@
     return fragment;
   }
   // Заполнение шаблона для одной фотографии
-  window.picture = {
-    createPhoto: function renderPhoto(picture) {
-      var elementTemplate = document.querySelector('#picture-template').content;
-      var newElement = elementTemplate.cloneNode(true);
+  window.picture = function (picture) {
+    var elementTemplate = document.querySelector('#picture-template').content;
+    var newElement = elementTemplate.cloneNode(true);
 
-      newElement.querySelector('img').src = picture.url;
-      newElement.querySelector('.picture-likes').textContent = picture.likes;
-      newElement.querySelector('.picture-comments').appendChild(addCommentsToPhoto(picture.comments));
-      return newElement;
-    }
+    newElement.querySelector('img').src = picture.url;
+    newElement.querySelector('.picture-likes').textContent = picture.likes;
+    newElement.querySelector('.picture-comments').appendChild(addCommentsToPhoto(picture.comments));
+    return newElement;
   };
 })();
