@@ -37,8 +37,19 @@
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
+  function successHandler() {
+    window.resetDefaults.resetForm();
+    closeUploadOverlay();
+  }
   function onSubmit(event) {
     window.validate.isValid(event, form);
+    var errors = document.querySelectorAll('.errors');
+    if (!errors.length) {
+      event.preventDefault();
+      window.backend.save(new FormData(form), successHandler, window.utils.showErrors);
+    } else {
+      event.preventDefault();
+    }
   }
   function onKeydownEscClose(event) {
     var descriptionPhoto = document.querySelector('.upload-form-description');
