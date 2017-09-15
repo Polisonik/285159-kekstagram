@@ -4,9 +4,9 @@
     var elementList = document.querySelector('.pictures');
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(window.picture(data[i]));
-    }
+    data.forEach(function (item) {
+      fragment.appendChild(window.picture(item));
+    });
     elementList.appendChild(fragment);
-	}
+  };
 })();

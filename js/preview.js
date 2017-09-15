@@ -68,8 +68,9 @@
   }
   // Обработка события нажатия Enter на миниатюру фотографии
   function onKeydownEnterPhoto(event) {
-    event.preventDefault();
     var target = event.target;
+
+    event.preventDefault();
     if (event.keyCode === window.utils.ENTER) {
       if (target.tagName === 'IMG') {
         getDataOfPhoto(event);

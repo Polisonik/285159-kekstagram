@@ -4,11 +4,11 @@
   function addCommentsToPhoto(comments) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < comments.length; i++) {
+    comments.forEach(function (item) {
       var newElement = document.createElement('span');
-      newElement.textContent = comments[i];
+      newElement.textContent = item;
       fragment.appendChild(newElement);
-    }
+    });
     return fragment;
   }
   // Заполнение шаблона для одной фотографии

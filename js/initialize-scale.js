@@ -3,11 +3,9 @@
   var min = 25;
   var max = 100;
   var step = 25;
-
   var resizeValue = null;
   var buttonDecrease = null;
   var buttonIncrease = null;
-
   var resizeScale = null;
 
   function controlResize(scaleElement) {
@@ -27,6 +25,7 @@
 	// Функция уменьшнния значения масштаба
   function getValueDesrease() {
     var value = getResizeValue() - step;
+
     if (value < min) {
       value = min;
     }
@@ -36,6 +35,7 @@
   // Функция увеличения значения масштаба
   function getValueIncrease() {
     var value = getResizeValue() + step;
+
     if (value > max) {
       value = max;
     }
@@ -44,27 +44,31 @@
   }
   function onClickDesrease(event) {
     var scale = getValueDesrease();
+
     if (typeof resizeScale === 'function') {
       resizeScale(scale);
     }
   }
   function onClickIncrease() {
     var scale = getValueIncrease();
+
     if (typeof resizeScale === 'function') {
       resizeScale(scale);
     }
   }
   function onKeydownEnterDesrease(event) {
+    var scale = getValueDesrease();
+
     if (event.keyCode === window.utils.ENTER) {
-      var scale = getValueDesrease();
       if (typeof resizeScale === 'function') {
         resizeScale(scale);
       }
     }
   }
   function onKeydownEnterIncrease(event) {
+    var scale = getValueIncrease();
+
     if (event.keyCode === window.utils.ENTER) {
-      var scale = getValueIncrease();
       if (typeof resizeScale === 'function') {
         resizeScale(scale);
       }
