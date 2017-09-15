@@ -1,27 +1,27 @@
 'use strict';
 (function () {
   // проверка,если хештеги отсутствуют
-  function isEmptyHashtag(hashtags) {
+  function checkEmptyHashtag(hashtags) {
     return (hashtags.join() === '');
   }
   // Проверка первого симовла хештега на равенстов '#'
-  function isFirstSymbolHashtag(hashtags) {
+  function checkFirstSymbolHashtag(hashtags) {
     var minLengthHashtag = 2;
 
     for (var i = 0; i < hashtags.length; i++) {
-      if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < minLengthHashtag)) {
+      if ((!checkEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < minLengthHashtag)) {
         return true;
       }
     }
     return false;
   }
   // Проверка на максимальное количество хештегов
-  function isCountHashtegs(hashtags) {
+  function checkCountHashtegs(hashtags) {
     var hashtagsCount = 5;
     return (hashtags.length > hashtagsCount);
   }
   // Проверка длины одного хештега
-  function isMaxLength(hashtags) {
+  function checkMaxLength(hashtags) {
     var maxLength = 20;
 
     for (var i = 0; i < hashtags.length; i++) {
@@ -32,7 +32,7 @@
     return false;
   }
   // Проверка на одинаковые хештеги
-  function isEqualHashtag(hashtags) {
+  function checkEqualHashtag(hashtags) {
     for (var i = 0; i < hashtags.length - 1; i++) {
       var item = hashtags[i];
       for (var j = i + 1; j < hashtags.length; j++) {
@@ -44,16 +44,16 @@
     return false;
   }
   // Проверка ввода комментария.
-  function isDescriptionEmpty(description) {
+  function checkDescriptionEmpty(description) {
     return (description === '');
   }
   // Проверка минимальной длины комментария.
-  function isMinLengthDescription(description) {
+  function checkMinLengthDescription(description) {
     var minLengthDescription = 30;
     return (description.length < minLengthDescription);
   }
   // Проверка максимальной длины комментария
-  function isMaxLengthDescription(description) {
+  function checkMaxLengthDescription(description) {
     var maxLengthDescription = 100;
     return (description.length > maxLengthDescription);
   }
@@ -96,25 +96,25 @@
       var messagesDescription = [];
 
       removeErrors();
-      if (isFirstSymbolHashtag(hashtags)) {
+      if (checkFirstSymbolHashtag(hashtags)) {
         messagesInput.push('хэш-тег должен начинаться с символа `#` и состоять из одного слова');
       }
-      if (isCountHashtegs(hashtags)) {
+      if (checkCountHashtegs(hashtags)) {
         messagesInput.push('нельзя указать больше пяти хэш-тегов');
       }
-      if (isMaxLength(hashtags)) {
+      if (checkMaxLength(hashtags)) {
         messagesInput.push('максимальная длина одного хэш-тега 20 символов');
       }
-      if (isEqualHashtag(hashtags)) {
+      if (checkEqualHashtag(hashtags)) {
         messagesInput.push('один и тот же хэш-тег не может быть использован дважды');
       }
-      if (isDescriptionEmpty(description)) {
+      if (checkDescriptionEmpty(description)) {
         messagesDescription.push('поле "комментарий" обязателен для заполнения');
       }
-      if (isMaxLengthDescription(description)) {
+      if (checkMaxLengthDescription(description)) {
         messagesDescription.push('Максимальная длина комментария — 100 символов');
       }
-      if (isMinLengthDescription(description)) {
+      if (checkMinLengthDescription(description)) {
         messagesDescription.push('Минимальная длина комментария — 30 символов');
       }
       if (messagesInput.length) {
