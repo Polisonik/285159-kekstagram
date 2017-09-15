@@ -29,6 +29,7 @@
     form.addEventListener('submit', onSubmit);
   }
   function closeUploadOverlay() {
+    window.resetDefaults.resetForm();
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
     uploadCansel.removeEventListener('click', onClickCanсel);
@@ -37,7 +38,6 @@
     toggle.removeEventListener('mousedown', onMouseDown);
   }
   function successHandler() {
-    window.resetDefaults.resetForm();
     closeUploadOverlay();
     document.querySelector('.filters').classList.remove('hidden');
   }
