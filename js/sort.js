@@ -1,5 +1,21 @@
 'use strict';
 (function () {
+  function compareLikes(first, second) {
+    return (second.likes - first.likes);
+  }
+  function compareLengthComments(first, second) {
+    return (second.comments.length - first.comments.length);
+  }
+  function compareRandom(a, b) {
+    return Math.random() - 0.5;
+  }
+  function removePictures() {
+    var oldPictures = document.querySelectorAll('.picture');
+
+    for (var i = 0; i < oldPictures.length; i++) {
+      oldPictures[i].remove();
+    }
+  }
   window.sort = function (data) {
     var array = data;
     var filters = document.querySelector('.filters');
@@ -13,34 +29,33 @@
         return;
       }
       if (target.id === 'filter-recommend') {
-        updatePictures(array);
+        window.debounce(showRecommend);
       }
       if (target.id === 'filter-popular') {
-        updatePictures(array.slice().sort(compareLikes));
+        window.debounce(showPopular);
       }
       if (target.id === 'filter-random') {
-        updatePictures(array.slice().sort(compareRandom));
+        window.debounce(showRendom);
       }
       if (target.id === 'filter-discussed') {
-        updatePictures(array.slice().sort(compareLengthComments));
+        window.debounce(showDiscussed);
       }
     }
-    function compareLikes(first, second) {
-      return (second.likes - first.likes);
+    function showRecommend() {
+      removePictures();
+      window.render(array);
     }
-    function compareLengthComments(first, second) {
-      return (second.comments.length - first.comments.length);
+    function showPopular() {
+      removePictures();
+      window.render(array.slice().sort(compareLikes));
     }
-    function updatePictures(newArray) {
-      var oldPictures = document.querySelectorAll('.picture');
-
-      for (var i = 0; i < oldPictures.length; i++) {
-        oldPictures[i].remove();
-      }
-      window.render(newArray);
+    function showRendom() {
+      removePictures();
+      window.render(array.slice().sort(compareRandom));
     }
-    function compareRandom(a, b) {
-      return Math.random() - 0.5;
+    function showDiscussed() {
+      removePictures();
+      window.render(array.slice().sort(compareLengthComments));
     }
   };
 })();
