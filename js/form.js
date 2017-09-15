@@ -4,7 +4,7 @@
   var form = document.querySelector('#upload-select-image');
   var uploadFile = form.querySelector('#upload-file');
   var uploadOverlay = form.querySelector('.upload-overlay');
-  var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
+  var uploadCancel = uploadOverlay.querySelector('.upload-form-cancel');
   var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
   var toggle = uploadOverlay.querySelector('.upload-effect-level-pin');
   var bar = uploadOverlay.querySelector('.upload-effect-level-val');
@@ -24,16 +24,16 @@
     window.initializeFilters(blockEffect, applyFilter);
     moveToggle();
     document.addEventListener('keydown', onKeydownEscClose);
-    uploadCansel.addEventListener('click', onClickCanсel);
-    uploadCansel.addEventListener('keydown', onKeydownEnterCanсel);
+    uploadCancel.addEventListener('click', onClickCancel);
+    uploadCancel.addEventListener('keydown', onKeydownEnterCancel);
     form.addEventListener('submit', onSubmit);
   }
   function closeUploadOverlay() {
     window.resetDefaults.resetForm();
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
-    uploadCansel.removeEventListener('click', onClickCanсel);
-    uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
+    uploadCancel.removeEventListener('click', onClickCancel);
+    uploadCancel.removeEventListener('keydown', onKeydownEnterCancel);
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
@@ -57,10 +57,10 @@
       closeUploadOverlay();
     }
   }
-  function onClickCanсel() {
+  function onClickCancel() {
     closeUploadOverlay();
   }
-  function onKeydownEnterCanсel(event) {
+  function onKeydownEnterCancel(event) {
     if (event.keyCode === window.utils.ENTER) {
       closeUploadOverlay();
     }

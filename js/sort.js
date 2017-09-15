@@ -35,7 +35,7 @@
         window.debounce(showPopular);
       }
       if (target.id === 'filter-random') {
-        window.debounce(showRendom);
+        window.debounce(showRandom);
       }
       if (target.id === 'filter-discussed') {
         window.debounce(showDiscussed);
@@ -49,7 +49,7 @@
       removePictures();
       window.render(array.slice().sort(compareLikes));
     }
-    function showRendom() {
+    function showRandom() {
       removePictures();
       window.render(array.slice().sort(compareRandom));
     }
