@@ -37,7 +37,7 @@
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
-  function successHandler() {
+  function saveHandler() {
     closeUploadOverlay();
     document.querySelector('.filters').classList.remove('hidden');
   }
@@ -46,7 +46,7 @@
     var errors = document.querySelectorAll('.errors');
     if (!errors.length) {
       event.preventDefault();
-      window.backend.save(new FormData(form), successHandler, window.utils.showErrors);
+      window.backend.save(new FormData(form), saveHandler, window.utils.showErrors);
     } else {
       event.preventDefault();
     }
