@@ -4,11 +4,11 @@
   var gallery = document.querySelector('.gallery-overlay');
   var closePhoto = gallery.querySelector('.gallery-overlay-close');
 
-  pictures.addEventListener('click', onClikPhoto);
+  pictures.addEventListener('click', onCliсkPhoto);
   pictures.addEventListener('keydown', onKeydownEnterPhoto);
 
 	// Обработка события клика мыши на миниатюру фотографии
-  function onClikPhoto(event) {
+  function onCliсkPhoto(event) {
     var target = event.target;
     if (target.tagName !== 'IMG') {
       return;
@@ -36,7 +36,7 @@
     var target = event.target;
     var src = target.src;
     var linkCount = target.nextElementSibling.lastElementChild.textContent;
-    var commentsCount = target.nextElementSibling.firstElementChild.children.length;
+    var commentsCount = target.nextElementSibling.firstElementChild.textContent;
 
     prepareDescriptionPhoto(src, linkCount, commentsCount);
   }
@@ -45,7 +45,7 @@
     var target = event.target;
     var src = target.firstElementChild.src;
     var linkCount = target.lastElementChild.lastElementChild.textContent;
-    var commentsCount = target.lastElementChild.firstElementChild.children.length;
+    var commentsCount = target.lastElementChild.firstElementChild.textContent;
 
     prepareDescriptionPhoto(src, linkCount, commentsCount);
   }
