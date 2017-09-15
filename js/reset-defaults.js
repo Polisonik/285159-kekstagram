@@ -45,7 +45,7 @@
       var defaultData = {
         hashteg: '',
         comments: '',
-        scale: '55%',
+        scale: '100%',
         imageClass: 'effect-image-preview'
       };
       var form = document.querySelector('.upload-form');

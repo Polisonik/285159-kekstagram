@@ -11,12 +11,14 @@
   var line = uploadOverlay.querySelector('.upload-effect-level-line');
   var scaleElement = uploadOverlay.querySelector('.upload-resize-controls');
   var photo = uploadOverlay.querySelector('.effect-image-preview');
+  var scaleindicator = uploadOverlay.querySelector('.upload-resize-controls-value');
 
   uploadFile.addEventListener('change', onInputFile);
   function onInputFile() {
     openUploadOverlay();
   }
   function openUploadOverlay() {
+    scaleindicator.value = window.utils.PERCENT + '%';
     uploadOverlay.classList.remove('hidden');
     toggle.style.display = 'none';
     bar.style.width = '0%';
