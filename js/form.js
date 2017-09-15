@@ -6,11 +6,10 @@
   var uploadOverlay = form.querySelector('.upload-overlay');
   var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
   var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
-  var toggle = document.querySelector('.upload-effect-level-pin');
-  var bar = document.querySelector('.upload-effect-level-val');
-  var line = document.querySelector('.upload-effect-level-line');
-
-  var scaleElement = document.querySelector('.upload-resize-controls');
+  var toggle = uploadOverlay.querySelector('.upload-effect-level-pin');
+  var bar = uploadOverlay.querySelector('.upload-effect-level-val');
+  var line = uploadOverlay.querySelector('.upload-effect-level-line');
+  var scaleElement = uploadOverlay.querySelector('.upload-resize-controls');
   var photo = uploadOverlay.querySelector('.effect-image-preview');
 
   uploadFile.addEventListener('change', onInputFile);
@@ -30,6 +29,7 @@
     form.addEventListener('submit', onSubmit);
   }
   function closeUploadOverlay() {
+    window.resetDefaults.resetForm();
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
     uploadCansel.removeEventListener('click', onClickCanсel);
@@ -38,8 +38,8 @@
     toggle.removeEventListener('mousedown', onMouseDown);
   }
   function successHandler() {
-    window.resetDefaults.resetForm();
     closeUploadOverlay();
+    document.querySelector('.filters').classList.remove('hidden');
   }
   function onSubmit(event) {
     window.validate.isValid(event, form);
@@ -69,12 +69,10 @@
   function adjustScale(scale) {
     photo.style.transform = 'scale(' + scale / window.utils.PERCENT + ')';
   }
-
   // Добавление эффектов
   function applyFilter(defaultClass, filterName) {
     photo.className = defaultClass + ' ' + 'effect-' + filterName;
   }
-
 	// Оживление ползунка
   function moveToggle() {
     toggle.addEventListener('mousedown', onMouseDown);

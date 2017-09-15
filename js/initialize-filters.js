@@ -10,7 +10,6 @@
     var target = event.target;
     var filterName = target.value;
     var defaultClass = 'effect-image-preview';
-
     if (target.tagName !== 'INPUT') {
       return;
     }

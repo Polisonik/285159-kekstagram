@@ -23,7 +23,7 @@
     var maxLength = 20;
     for (var i = 0; i < hashtags.length; i++) {
       if (hashtags[i].length > maxLength) {
-        return (hashtags[i].length > maxLength);
+        return true;
       }
     }
     return false;
