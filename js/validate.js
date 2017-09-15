@@ -6,8 +6,10 @@
   }
   // Проверка первого симовла хештега на равенстов '#'
   function isFirstSymbolHashtag(hashtags) {
+    var minLengthHashtag = 2;
+
     for (var i = 0; i < hashtags.length; i++) {
-      if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < 2)) {
+      if ((!isEmptyHashtag(hashtags)) && (hashtags[i][0] !== '#') || (hashtags[i][0] === '#') && (hashtags[i].length < minLengthHashtag)) {
         return true;
       }
     }
@@ -21,6 +23,7 @@
   // Проверка длины одного хештега
   function isMaxLength(hashtags) {
     var maxLength = 20;
+
     for (var i = 0; i < hashtags.length; i++) {
       if (hashtags[i].length > maxLength) {
         return true;
@@ -57,12 +60,13 @@
   // Функция вывода ошибок валидации полей формы
   function showErrors(errors, element) {
     var ul = document.createElement('ul');
+    var fragment = document.createDocumentFragment();
+
     element.style.borderColor = 'red';
     ul.className = 'errors';
     ul.style.listStyle = 'none';
     ul.style.color = 'red';
     element.parentElement.appendChild(ul);
-    var fragment = document.createDocumentFragment();
     for (var i = 0; i < errors.length; i++) {
       var li = document.createElement('li');
       li.textContent = errors[i];
@@ -75,6 +79,7 @@
     var textarea = form.querySelector('.upload-form-description');
     var input = form.querySelector('.upload-form-hashtags');
     var errors = form.querySelectorAll('.errors');
+
     textarea.style.borderColor = 'initial';
     input.style.borderColor = 'initial';
     for (var i = 0; i < errors.length; i++) {
