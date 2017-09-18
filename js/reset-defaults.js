@@ -1,17 +1,23 @@
 'use strict';
 (function () {
+  var form = document.querySelector('.upload-form');
+  var defaultClass = 'effect-image-preview';
+  var toggle = document.querySelector('.upload-effect-level-pin');
+  var bar = document.querySelector('.upload-effect-level-val');
+  var hashtag = form.querySelector('.upload-form-hashtags');
+  var comments = form.querySelector('.upload-form-description');
+
   function showToggle() {
-    document.querySelector('.upload-effect-level-pin').style.display = 'block';
-    document.querySelector('.upload-effect-level-pin').style.left = '20%';
-    document.querySelector('.upload-effect-level-val').style.width = '20%';
+    toggle.style.display = 'block';
+    toggle.style.left = '20%';
+    bar.style.width = '20%';
   }
   function hideToggle() {
-    document.querySelector('.upload-effect-level-pin').style.display = 'none';
-    document.querySelector('.upload-effect-level-val').style.width = '0%';
+    toggle.style.display = 'none';
+    bar.style.width = '0%';
   }
   window.resetDefaults = {
     resetEffect: function (photo) {
-      var defaultClass = 'effect-image-preview';
       var effectByDefault = {
         none: 'none',
         chrome: 'grayscale(1)',
@@ -42,24 +48,25 @@
       }
     },
     resetForm: function () {
+      var picture = form.querySelector('.effect-image-preview');
+      var scale = form.querySelector('.upload-resize-controls-value');
       var defaultData = {
-        hashteg: '',
+        hashtag: '',
         comments: '',
         scale: '100%',
-        imageClass: 'effect-image-preview'
       };
-      var form = document.querySelector('.upload-form');
       var checkedInputDefault = form.querySelector('#upload-effect-none');
       var checkedInputCurrent = form.querySelector('input[name="effect"]:checked');
 
-      form.querySelector('.upload-resize-controls-value').value = defaultData.scale;
-      form.querySelector('.effect-image-preview').style.transform = 'none';
-      form.querySelector('.effect-image-preview').style.filter = 'none';
-      form.querySelector('.effect-image-preview').className = defaultData.imageClass;
-      form.querySelector('.upload-form-hashtags').value = defaultData.hashteg;
-      form.querySelector('.upload-form-description').value = defaultData.comments;
-      form.querySelector('.upload-effect-level-pin').style.display = 'none';
-      form.querySelector('.upload-effect-level-val').style.width = '0%';
+      window.validate.removeErrors(comments, hashtag, form);
+      scale.value = defaultData.scale;
+      picture.style.transform = 'none';
+      picture.style.filter = 'none';
+      picture.className = defaultClass;
+      hashtag.value = defaultData.hashtag;
+      comments.value = defaultData.comments;
+      toggle.style.display = 'none';
+      bar.style.width = '0%';
 
       if (checkedInputCurrent.id !== 'upload-effect-none') {
         checkedInputCurrent.checked = false;

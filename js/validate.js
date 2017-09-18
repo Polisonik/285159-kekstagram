@@ -74,18 +74,6 @@
     }
     ul.appendChild(fragment);
   }
-  function removeErrors() {
-    var form = document.querySelector('#upload-select-image');
-    var textarea = form.querySelector('.upload-form-description');
-    var input = form.querySelector('.upload-form-hashtags');
-    var errors = form.querySelectorAll('.errors');
-
-    textarea.style.borderColor = 'initial';
-    input.style.borderColor = 'initial';
-    for (var i = 0; i < errors.length; i++) {
-      errors[i].remove();
-    }
-  }
   window.validate = {
     isValid: function (event, form) {
       var textarea = form.querySelector('.upload-form-description');
@@ -95,7 +83,7 @@
       var messagesInput = [];
       var messagesDescription = [];
 
-      removeErrors();
+      window.validate.removeErrors(textarea, input, form);
       if (checkFirstSymbolHashtag(hashtags)) {
         messagesInput.push('хэш-тег должен начинаться с символа `#` и состоять из одного слова');
       }
@@ -122,6 +110,15 @@
       }
       if (messagesDescription.length) {
         showErrors(messagesDescription, textarea);
+      }
+    },
+    removeErrors: function (textarea, input, form) {
+      var errors = form.querySelectorAll('.errors');
+
+      textarea.style.borderColor = 'initial';
+      input.style.borderColor = 'initial';
+      for (var i = 0; i < errors.length; i++) {
+        errors[i].remove();
       }
     }
   };

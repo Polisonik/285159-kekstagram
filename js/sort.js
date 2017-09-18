@@ -28,17 +28,14 @@
       if (target.tagName.toLowerCase() !== 'input') {
         return;
       }
-      if (target.id === 'filter-recommend') {
-        window.debounce(showRecommend);
-      }
       if (target.id === 'filter-popular') {
         window.debounce(showPopular);
-      }
-      if (target.id === 'filter-random') {
+      } else if (target.id === 'filter-random') {
         window.debounce(showRandom);
-      }
-      if (target.id === 'filter-discussed') {
+      } else if (target.id === 'filter-discussed') {
         window.debounce(showDiscussed);
+      } else {
+        window.debounce(showRecommend);
       }
     }
     function showRecommend() {

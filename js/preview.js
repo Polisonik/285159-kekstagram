@@ -13,7 +13,7 @@
     var target = event.target;
     if (target.tagName.toLowerCase() !== 'img') {
       return;
-    }    
+    }
     getDataOfPhoto(event);
     openPopup();
   }
