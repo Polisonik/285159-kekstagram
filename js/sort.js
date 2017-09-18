@@ -25,7 +25,7 @@
     function onChange(event) {
       var target = event.target;
 
-      if (target.tagName !== 'INPUT') {
+      if (target.tagName.toLowerCase() !== 'input') {
         return;
       }
       if (target.id === 'filter-recommend') {

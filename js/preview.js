@@ -9,11 +9,11 @@
 
 	// Обработка события клика мыши на миниатюру фотографии
   function onCliсkPhoto(event) {
-    var target = event.target;
-    if (target.tagName !== 'IMG') {
-      return;
-    }
     event.preventDefault();
+    var target = event.target;
+    if (target.tagName.toLowerCase() !== 'img') {
+      return;
+    }    
     getDataOfPhoto(event);
     openPopup();
   }
@@ -68,14 +68,14 @@
   }
   // Обработка события нажатия Enter на миниатюру фотографии
   function onKeydownEnterPhoto(event) {
+    event.preventDefault();
     var target = event.target;
 
-    event.preventDefault();
     if (event.keyCode === window.utils.ENTER) {
-      if (target.tagName === 'IMG') {
+      if (target.tagName.toLowerCase() === 'img') {
         getDataOfPhoto(event);
         openPopup();
-      } else if (target.tagName === 'A') {
+      } else {
         getDataOfPhotoAlternative(event);
         openPopup();
       }

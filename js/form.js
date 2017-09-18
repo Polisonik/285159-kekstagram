@@ -41,7 +41,6 @@
   }
   function saveHandler() {
     closeUploadOverlay();
-    document.querySelector('.filters').classList.remove('hidden');
   }
   function onSubmit(event) {
     window.validate.isValid(event, form);
