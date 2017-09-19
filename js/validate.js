@@ -43,18 +43,9 @@
     }
     return false;
   }
-  // Проверка ввода комментария.
-  function checkDescriptionEmpty(description) {
-    return (description === '');
-  }
-  // Проверка минимальной длины комментария.
-  function checkMinLengthDescription(description) {
-    var minLengthDescription = 30;
-    return (description.length < minLengthDescription);
-  }
   // Проверка максимальной длины комментария
   function checkMaxLengthDescription(description) {
-    var maxLengthDescription = 100;
+    var maxLengthDescription = 140;
     return (description.length > maxLengthDescription);
   }
   // Функция вывода ошибок валидации полей формы
@@ -96,14 +87,8 @@
       if (checkEqualHashtag(hashtags)) {
         messagesInput.push('один и тот же хэш-тег не может быть использован дважды');
       }
-      if (checkDescriptionEmpty(description)) {
-        messagesDescription.push('поле "комментарий" обязателен для заполнения');
-      }
       if (checkMaxLengthDescription(description)) {
-        messagesDescription.push('Максимальная длина комментария — 100 символов');
-      }
-      if (checkMinLengthDescription(description)) {
-        messagesDescription.push('Минимальная длина комментария — 30 символов');
+        messagesDescription.push('Максимальная длина комментария — 140 символов');
       }
       if (messagesInput.length) {
         showErrors(messagesInput, input);
