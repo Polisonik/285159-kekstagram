@@ -2,19 +2,19 @@
 (function () {
   var form = document.querySelector('.upload-form');
   var defaultClass = 'effect-image-preview';
-  var toggle = document.querySelector('.upload-effect-level-pin');
-  var bar = document.querySelector('.upload-effect-level-val');
+  var effectLevel = form.querySelector('.upload-effect-level');
+  var toggle = form.querySelector('.upload-effect-level-pin');
+  var bar = form.querySelector('.upload-effect-level-val');
   var hashtag = form.querySelector('.upload-form-hashtags');
   var comments = form.querySelector('.upload-form-description');
 
-  function showToggle() {
-    toggle.style.display = 'block';
+  function showEffectLevel() {
+    effectLevel.style.display = 'block';
     toggle.style.left = '20%';
     bar.style.width = '20%';
   }
-  function hideToggle() {
-    toggle.style.display = 'none';
-    bar.style.width = '0%';
+  function hideEffectLevel() {
+    effectLevel.style.display = 'none';
   }
   window.resetDefaults = {
     resetEffect: function (photo) {
@@ -29,22 +29,22 @@
 
       if (photo.classList.contains('effect-chrome')) {
         photo.style.filter = effectByDefault.chrome;
-        showToggle();
+        showEffectLevel();
       } else if (photo.classList.contains('effect-sepia')) {
         photo.style.filter = effectByDefault.sepia;
-        showToggle();
+        showEffectLevel();
       } else if (photo.classList.contains('effect-marvin')) {
         photo.style.filter = effectByDefault.marvin;
-        showToggle();
+        showEffectLevel();
       } else if (photo.classList.contains('effect-phobos')) {
         photo.style.filter = effectByDefault.phobos;
-        showToggle();
+        showEffectLevel();
       } else if (photo.classList.contains('effect-heat')) {
         photo.style.filter = effectByDefault.heat;
-        showToggle();
+        showEffectLevel();
       } else if (photo.classList.contains('effect-none') || photo.className === defaultClass) {
         photo.style.filter = effectByDefault.none;
-        hideToggle();
+        hideEffectLevel();
       }
     },
     resetForm: function () {
@@ -65,8 +65,7 @@
       picture.className = defaultClass;
       hashtag.value = defaultData.hashtag;
       comments.value = defaultData.comments;
-      toggle.style.display = 'none';
-      bar.style.width = '0%';
+      effectLevel.style.display = 'none';
 
       if (checkedInputCurrent.id !== 'upload-effect-none') {
         checkedInputCurrent.checked = false;

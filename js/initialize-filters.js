@@ -10,7 +10,7 @@
     var target = event.target;
     var filterName = target.value;
     var defaultClass = 'effect-image-preview';
-    if (target.tagName !== 'INPUT') {
+    if (target.tagName.toLowerCase() !== 'input') {
       return;
     }
     if (typeof changeFilter === 'function') {
