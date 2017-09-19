@@ -4,21 +4,19 @@
   var form = document.querySelector('#upload-select-image');
   var uploadFile = form.querySelector('#upload-file');
   var uploadOverlay = form.querySelector('.upload-overlay');
-  var uploadCancel = uploadOverlay.querySelector('.upload-form-cancel');
+  var uploadCansel = uploadOverlay.querySelector('.upload-form-cancel');
   var blockEffect = uploadOverlay.querySelector('.upload-effect-controls');
   var toggle = uploadOverlay.querySelector('.upload-effect-level-pin');
   var bar = uploadOverlay.querySelector('.upload-effect-level-val');
   var line = uploadOverlay.querySelector('.upload-effect-level-line');
   var scaleElement = uploadOverlay.querySelector('.upload-resize-controls');
   var photo = uploadOverlay.querySelector('.effect-image-preview');
-  var scaleIndicator = uploadOverlay.querySelector('.upload-resize-controls-value');
 
   uploadFile.addEventListener('change', onInputFile);
   function onInputFile() {
     openUploadOverlay();
   }
   function openUploadOverlay() {
-    scaleIndicator.value = window.utils.PERCENT + '%';
     uploadOverlay.classList.remove('hidden');
     toggle.style.display = 'none';
     bar.style.width = '0%';
@@ -26,28 +24,29 @@
     window.initializeFilters(blockEffect, applyFilter);
     moveToggle();
     document.addEventListener('keydown', onKeydownEscClose);
-    uploadCancel.addEventListener('click', onClickCancel);
-    uploadCancel.addEventListener('keydown', onKeydownEnterCancel);
+    uploadCansel.addEventListener('click', onClickCanсel);
+    uploadCansel.addEventListener('keydown', onKeydownEnterCanсel);
     form.addEventListener('submit', onSubmit);
   }
   function closeUploadOverlay() {
     window.resetDefaults.resetForm();
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onKeydownEscClose);
-    uploadCancel.removeEventListener('click', onClickCancel);
-    uploadCancel.removeEventListener('keydown', onKeydownEnterCancel);
+    uploadCansel.removeEventListener('click', onClickCanсel);
+    uploadCansel.removeEventListener('keydown', onKeydownEnterCanсel);
     form.removeEventListener('submit', onSubmit);
     toggle.removeEventListener('mousedown', onMouseDown);
   }
-  function saveHandler() {
+  function successHandler() {
     closeUploadOverlay();
+    document.querySelector('.filters').classList.remove('hidden');
   }
   function onSubmit(event) {
     window.validate.isValid(event, form);
     var errors = document.querySelectorAll('.errors');
     if (!errors.length) {
       event.preventDefault();
-      window.backend.save(new FormData(form), saveHandler, window.utils.showErrors);
+      window.backend.save(new FormData(form), successHandler, window.utils.showErrors);
     } else {
       event.preventDefault();
     }
@@ -58,10 +57,10 @@
       closeUploadOverlay();
     }
   }
-  function onClickCancel() {
+  function onClickCanсel() {
     closeUploadOverlay();
   }
-  function onKeydownEnterCancel(event) {
+  function onKeydownEnterCanсel(event) {
     if (event.keyCode === window.utils.ENTER) {
       closeUploadOverlay();
     }
