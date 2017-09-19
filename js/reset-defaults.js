@@ -20,11 +20,11 @@
     resetEffect: function (photo) {
       var effectByDefault = {
         none: 'none',
-        chrome: 'grayscale(1)',
-        sepia: 'sepia(1)',
-        marvin: 'invert(100%)',
-        phobos: 'blur(5px)',
-        heat: 'brightness(3)'
+        chrome: 'grayscale(0.2)',
+        sepia: 'sepia(0.2)',
+        marvin: 'invert(20%)',
+        phobos: 'blur(0.6px)',
+        heat: 'brightness(0.6)'
       };
 
       if (photo.classList.contains('effect-chrome')) {
